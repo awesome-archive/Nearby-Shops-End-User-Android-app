@@ -5,22 +5,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-import org.nearbyshops.enduserappnew.ItemsByCategory.ViewHolders.ViewHolderItemCategory;
-import org.nearbyshops.enduserappnew.ItemsByCategory.AdapterItemCatHorizontalList;
-import org.nearbyshops.enduserappnew.ItemsByCategory.Model.ItemCategoriesList;
-import org.nearbyshops.enduserappnew.ItemsInShopByCategory.ViewHolders.ViewHolderShopItemSimplified;
+
 import org.nearbyshops.enduserappnew.Model.ItemCategory;
-import org.nearbyshops.enduserappnew.Model.Shop;
-import org.nearbyshops.enduserappnew.Model.ShopItem;
 import org.nearbyshops.enduserappnew.Model.ModelCartOrder.CartItem;
 import org.nearbyshops.enduserappnew.Model.ModelStats.CartStats;
-import org.nearbyshops.enduserappnew.ShopsList.ViewHolders.ViewHolderShop;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.LoadingViewHolder;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.Models.EmptyScreenData;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.Models.HeaderTitle;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.ViewHolderEmptyScreenNew;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.ViewHolderHeaderSimple;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.ViewHolderHorizontalList;
+import org.nearbyshops.enduserappnew.Model.Shop;
+import org.nearbyshops.enduserappnew.Model.ShopItem;
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderItemCategory;
+import org.nearbyshops.enduserappnew.ItemsByCategory.AdapterItemCatHorizontalList;
+import org.nearbyshops.enduserappnew.ViewHolders.Model.ItemCategoriesList;
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderShopItemSimplified;
+
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderShop;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.LoadingViewHolder;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.Models.EmptyScreenDataFullScreen;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.Models.HeaderTitle;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.ViewHolderEmptyScreenFullScreen;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.ViewHolderHeader;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.ViewHolderHorizontalList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +67,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
     private Fragment fragment;
-//    private ViewHolderShopItem viewHolderShopItem;
+//    private ViewHolderShopItemSeller viewHolderShopItem;
 
 
 
@@ -114,7 +116,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
         else if(viewType == VIEW_TYPE_HEADER)
         {
-            return ViewHolderHeaderSimple.create(parent,context);
+            return ViewHolderHeader.create(parent,context);
         }
         else if(viewType == VIEW_TYPE_SCROLL_PROGRESS_BAR)
         {
@@ -122,7 +124,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
         else if(viewType==VIEW_TYPE_EMPTY_SCREEN)
         {
-            return ViewHolderEmptyScreenNew.create(parent,context);
+            return ViewHolderEmptyScreenFullScreen.create(parent,context);
         }
 
 
@@ -155,11 +157,11 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         {
             ((ViewHolderShopItemSimplified) holder).bindShopItems((ShopItem) dataset.get(position));
         }
-        else if (holder instanceof ViewHolderHeaderSimple) {
+        else if (holder instanceof ViewHolderHeader) {
 
             if (dataset.get(position) instanceof HeaderTitle) {
 
-                ((ViewHolderHeaderSimple) holder).setItem((HeaderTitle) dataset.get(position));
+                ((ViewHolderHeader) holder).setItem((HeaderTitle) dataset.get(position));
             }
 
         }
@@ -168,11 +170,10 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ((LoadingViewHolder) holder).setLoading(loadMore);
 
         }
-        else if(holder instanceof ViewHolderEmptyScreenNew)
+        else if(holder instanceof ViewHolderEmptyScreenFullScreen)
         {
-            ((ViewHolderEmptyScreenNew) holder).setItem((EmptyScreenData) dataset.get(position));
+            ((ViewHolderEmptyScreenFullScreen) holder).setItem((EmptyScreenDataFullScreen) dataset.get(position));
         }
-
 
 
     }
@@ -210,7 +211,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         {
             return VIEW_TYPE_HEADER;
         }
-        else if(dataset.get(position) instanceof EmptyScreenData)
+        else if(dataset.get(position) instanceof EmptyScreenDataFullScreen)
         {
             return VIEW_TYPE_EMPTY_SCREEN;
         }

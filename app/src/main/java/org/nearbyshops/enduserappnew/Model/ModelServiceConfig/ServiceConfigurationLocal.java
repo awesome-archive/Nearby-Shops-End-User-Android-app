@@ -48,43 +48,6 @@ public class ServiceConfigurationLocal {
     public static final String UPDATED = "UPDATED";
 
 
-    // Create Table Statement
-    public static final String createTableServiceConfigurationPostgres
-            = "CREATE TABLE IF NOT EXISTS " + ServiceConfigurationLocal.TABLE_NAME + "("
-            + " " + ServiceConfigurationLocal.SERVICE_CONFIGURATION_ID + " SERIAL PRIMARY KEY,"
-
-//            + " " + ServiceConfigurationLocal.IMAGE_PATH + " text,"
-            + " " + ServiceConfigurationLocal.LOGO_IMAGE_PATH + " text,"
-            + " " + ServiceConfigurationLocal.BACKDROP_IMAGE_PATH + " text,"
-
-            + " " + ServiceConfigurationLocal.SERVICE_NAME + " text,"
-            + " " + ServiceConfigurationLocal.HELPLINE_NUMBER + " text,"
-
-            + " " + ServiceConfigurationGlobal.DESCRIPTION_SHORT + " text,"
-            + " " + ServiceConfigurationGlobal.DESCRIPTION_LONG + " text,"
-
-            + " " + ServiceConfigurationLocal.ADDRESS + " text,"
-            + " " + ServiceConfigurationLocal.CITY + " text,"
-            + " " + ServiceConfigurationLocal.PINCODE + " BIGINT,"
-            + " " + ServiceConfigurationLocal.LANDMARK + " text,"
-            + " " + ServiceConfigurationLocal.STATE + " text,"
-            + " " + ServiceConfigurationLocal.COUNTRY + " text,"
-
-            + " " + ServiceConfigurationLocal.ISO_COUNTRY_CODE + " text,"
-            + " " + ServiceConfigurationLocal.ISO_LANGUAGE_CODE + " text,"
-            + " " + ServiceConfigurationLocal.ISO_CURRENCY_CODE + " text,"
-
-            + " " + ServiceConfigurationLocal.SERVICE_TYPE + " INT,"
-            + " " + ServiceConfigurationLocal.SERVICE_LEVEL + " INT,"
-
-            + " " + ServiceConfigurationLocal.LAT_CENTER + " FLOAT,"
-            + " " + ServiceConfigurationLocal.LON_CENTER + " FLOAT,"
-            + " " + ServiceConfigurationLocal.SERVICE_RANGE + " FLOAT,"
-
-            + " " + ServiceConfigurationLocal.UPDATED + " timestamp with time zone,"
-            + " " + ServiceConfigurationLocal.CREATED + " timestamp with time zone NOT NULL DEFAULT now()"
-            + ")";
-
 
 
 
@@ -132,6 +95,7 @@ public class ServiceConfigurationLocal {
 
 
     private boolean rt_login_using_otp_enabled;
+    private String rt_market_id_for_fcm;
 
 
 
@@ -142,6 +106,14 @@ public class ServiceConfigurationLocal {
 
     // getter and setter
 
+
+    public String getRt_market_id_for_fcm() {
+        return rt_market_id_for_fcm;
+    }
+
+    public void setRt_market_id_for_fcm(String rt_market_id_for_fcm) {
+        this.rt_market_id_for_fcm = rt_market_id_for_fcm;
+    }
 
     public int getServiceID() {
         return serviceID;

@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
+
+
 import org.nearbyshops.enduserappnew.R;
 import org.nearbyshops.enduserappnew.SignUp.Interfaces.ShowFragmentForgotPassword;
 
@@ -113,6 +115,10 @@ public class ForgotPassword extends AppCompatActivity implements ShowFragmentFor
                 .commit();
 
     }
+
+
+
+
 
 
     @Override

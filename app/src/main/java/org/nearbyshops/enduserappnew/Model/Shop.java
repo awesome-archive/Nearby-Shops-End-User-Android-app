@@ -2,6 +2,8 @@ package org.nearbyshops.enduserappnew.Model;
 
 
 
+import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
+
 import java.sql.Timestamp;
 
 public class Shop{
@@ -50,24 +52,111 @@ public class Shop{
 	private String longDescription;
 
 	private Timestamp dateTimeStarted;
+	private Timestamp timestampCreated;
 	private boolean isOpen;
+	private int shopAdminID;
+
+
+	private double accountBalance;
+
 
 
 	// real time variables
 	private double rt_distance;
 	private float rt_rating_avg;
 	private float rt_rating_count;
+	private double rt_min_balance;
+
+
+	private User shopAdminProfile;
+	private double extendedCreditLimit;
 
 
 
-	// deleted columns
-	// bounding coordinates for the shop generated using shop center coordinates and delivery range.
-//	private double latMax;
-//	private double lonMax;
-//	private double latMin;
-//	private double lonMin;
 
 
+
+
+
+	public Timestamp getTimestampCreated() {
+		return timestampCreated;
+	}
+
+	public void setTimestampCreated(Timestamp timestampCreated) {
+		this.timestampCreated = timestampCreated;
+	}
+
+	public int getShopAdminID() {
+		return shopAdminID;
+	}
+
+	public void setShopAdminID(int shopAdminID) {
+		this.shopAdminID = shopAdminID;
+	}
+
+	public double getExtendedCreditLimit() {
+		return extendedCreditLimit;
+	}
+
+	public void setExtendedCreditLimit(double extendedCreditLimit) {
+		this.extendedCreditLimit = extendedCreditLimit;
+	}
+
+	public User getShopAdminProfile() {
+		return shopAdminProfile;
+	}
+
+	public void setShopAdminProfile(User shopAdminProfile) {
+		this.shopAdminProfile = shopAdminProfile;
+	}
+
+	public boolean isPickFromShopAvailable() {
+		return pickFromShopAvailable;
+	}
+
+	public void setPickFromShopAvailable(boolean pickFromShopAvailable) {
+		this.pickFromShopAvailable = pickFromShopAvailable;
+	}
+
+	public boolean isHomeDeliveryAvailable() {
+		return homeDeliveryAvailable;
+	}
+
+	public void setHomeDeliveryAvailable(boolean homeDeliveryAvailable) {
+		this.homeDeliveryAvailable = homeDeliveryAvailable;
+	}
+
+	public boolean isShopEnabled() {
+		return shopEnabled;
+	}
+
+	public void setShopEnabled(boolean shopEnabled) {
+		this.shopEnabled = shopEnabled;
+	}
+
+	public boolean isShopWaitlisted() {
+		return shopWaitlisted;
+	}
+
+	public void setShopWaitlisted(boolean shopWaitlisted) {
+		this.shopWaitlisted = shopWaitlisted;
+	}
+
+	public double getAccountBalance() {
+		return accountBalance;
+	}
+
+	public void setAccountBalance(double accountBalance) {
+		this.accountBalance = accountBalance;
+	}
+
+	public double getRt_min_balance() {
+		return rt_min_balance;
+	}
+
+	public void setRt_min_balance(double rt_min_balance) {
+		this.rt_min_balance = rt_min_balance;
+	}
 
 	public int getShopID() {
 		return shopID;

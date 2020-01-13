@@ -28,20 +28,8 @@ public class Item{
 	public static final String IS_WAITLISTED = "IS_WAITLISTED";
 
 
-	// Create Table Statement
-	public static final String createTableItemPostgres = "CREATE TABLE IF NOT EXISTS "
-			+ Item.TABLE_NAME + "("
-			+ " " + Item.ITEM_ID + " SERIAL PRIMARY KEY,"
-			+ " " + Item.ITEM_NAME + " text,"
-			+ " " + Item.ITEM_DESC + " text,"
-			+ " " + Item.ITEM_DESCRIPTION_LONG + " text,"
-			+ " " + Item.ITEM_IMAGE_URL + " text,"
-			+ " " + Item.QUANTITY_UNIT + " text,"
-			+ " " + Item.ITEM_CATEGORY_ID + " INT,"
-			+ " " + Item.IS_ENABLED + " boolean,"
-			+ " " + Item.IS_WAITLISTED + " boolean,"
-			+ " " + Item.DATE_TIME_CREATED + "  timestamp with time zone NOT NULL DEFAULT now(),"
-			+ " FOREIGN KEY(" + Item.ITEM_CATEGORY_ID +") REFERENCES ITEM_CATEGORY(ID))";
+
+
 
 
 	// Instance Variables
@@ -54,6 +42,13 @@ public class Item{
 
 	private String itemDescription;
 	private String itemImageURL;
+
+	private float listPrice;
+	private String barcode;
+	private String barcodeFormat;
+	private String imageCopyrights;
+
+
 	
 	//technically it is the name of the manufacturer 
 	// Typically its the name of the manufacturer
@@ -78,6 +73,38 @@ public class Item{
 
 	// getter and setter methods
 
+
+	public String getImageCopyrights() {
+		return imageCopyrights;
+	}
+
+	public void setImageCopyrights(String imageCopyrights) {
+		this.imageCopyrights = imageCopyrights;
+	}
+
+	public float getListPrice() {
+		return listPrice;
+	}
+
+	public void setListPrice(float listPrice) {
+		this.listPrice = listPrice;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+
+	public String getBarcodeFormat() {
+		return barcodeFormat;
+	}
+
+	public void setBarcodeFormat(String barcodeFormat) {
+		this.barcodeFormat = barcodeFormat;
+	}
 
 	public int getItemID() {
 		return itemID;

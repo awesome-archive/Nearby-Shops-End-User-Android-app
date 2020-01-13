@@ -13,13 +13,16 @@ public class CartItem{
     private Cart cart;
     private Item item;
 
-    private int itemQuantity;
+    private double itemQuantity;
     private int rt_availableItemQuantity;
     private double rt_itemPrice;
     private String rt_quantityUnit;
 
-    public CartItem() {
-    }
+
+
+
+
+
 
     public int getRt_availableItemQuantity() {
         return rt_availableItemQuantity;
@@ -77,15 +80,12 @@ public class CartItem{
         this.itemID = itemID;
     }
 
-    public int getItemQuantity() {
+
+    public double getItemQuantity() {
         return itemQuantity;
     }
 
-    public void setItemQuantity(int itemQuantity) {
+    public void setItemQuantity(double itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
-
-
-
-
 }

@@ -18,26 +18,28 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
+
 import org.nearbyshops.enduserappnew.API_SDS.ServiceConfigService;
+import org.nearbyshops.enduserappnew.Model.ModelEndPoints.ServiceConfigurationEndPoint;
+import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
+import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationGlobal;
+import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationLocal;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Interfaces.LocationUpdated;
 import org.nearbyshops.enduserappnew.Interfaces.NotifySearch;
 import org.nearbyshops.enduserappnew.Interfaces.NotifySort;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.Models.HeaderItemsList;
-import org.nearbyshops.enduserappnew.MarketDetail.MarketDetail;
-import org.nearbyshops.enduserappnew.MarketDetail.MarketDetailFragment;
+import org.nearbyshops.enduserappnew.DetailMarket.MarketDetail;
+import org.nearbyshops.enduserappnew.DetailMarket.MarketDetailFragment;
 import org.nearbyshops.enduserappnew.Markets.Interfaces.MarketSelected;
 import org.nearbyshops.enduserappnew.Markets.Interfaces.listItemMarketNotifications;
-import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
-import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.Endpoints.ServiceConfigurationEndPoint;
-import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationGlobal;
-import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationLocal;
 import org.nearbyshops.enduserappnew.MyApplication;
 import org.nearbyshops.enduserappnew.Preferences.PrefLocation;
 import org.nearbyshops.enduserappnew.Preferences.PrefLoginGlobal;
 import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
-import org.nearbyshops.enduserappnew.Preferences.UtilityFunctions;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
 import org.nearbyshops.enduserappnew.R;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.Models.HeaderTitle;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -503,7 +505,7 @@ public class MarketsFragment extends Fragment implements listItemMarketNotificat
 
                             if(item_count>0)
                             {
-                                dataset.add(new HeaderItemsList());
+                                dataset.add(new HeaderTitle());
                             }
 
 

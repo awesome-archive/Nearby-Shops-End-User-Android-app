@@ -27,8 +27,9 @@ public class DeliveryAddress{
     public static final String LONGITUDE = "LONGITUDE";
 
 
-    public DeliveryAddress() {
-    }
+
+
+
 
     // instance variables
     private int id;
@@ -43,8 +44,21 @@ public class DeliveryAddress{
     private int endUserID;
 
 
+    private Double rt_distance;
+
+
+
 
     // getter and setters
+
+
+    public Double getRt_distance() {
+        return rt_distance;
+    }
+
+    public void setRt_distance(Double rt_distance) {
+        this.rt_distance = rt_distance;
+    }
 
     public double getLatitude() {
         return latitude;

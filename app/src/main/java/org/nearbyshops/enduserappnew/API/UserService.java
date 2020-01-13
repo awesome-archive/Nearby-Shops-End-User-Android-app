@@ -1,10 +1,12 @@
 package org.nearbyshops.enduserappnew.API;
 
 
+import org.nearbyshops.enduserappnew.Model.Image;
+import org.nearbyshops.enduserappnew.Model.ModelEndPoints.UserEndpoint;
+import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
+
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import org.nearbyshops.enduserappnew.Model.Image;
-import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -118,10 +120,32 @@ public interface UserService {
 
 
 
-
-
-    @GET ("/api/v1/User/GetProfileWithLogin")
+    @GET("/api/v1/User/GetProfileWithLogin")
     Call<User> getProfile(@Header("Authorization") String headers);
+
+
+
+
+
+    @GET ("/api/v1/User")
+    Call<UserEndpoint> getUsers(
+            @Header("Authorization") String headers,
+            @Query("UserRole") Integer userRole,
+            @Query("Gender") Boolean gender,
+            @Query("SortBy") String sortBy,
+            @Query("Limit")int limit, @Query("Offset")int offset,
+            @Query("GetRowCount")boolean getRowCount,
+            @Query("MetadataOnly")boolean getOnlyMetaData);
+
+
+
+
+    @GET ("/api/v1/User/GetUserDetails/{UserID}")
+    Call<User> getUserDetails(
+            @Header("Authorization") String headers,
+            @Path("UserID")int userID
+    );
+
 
 
 
@@ -140,47 +164,14 @@ public interface UserService {
 
 
 
-//    /* Deprecated Methods : Start */
-//
-//
-//
-//
-//    @PUT ("api/v1/User/ChangeEmail/{NewEmail}")
-//    Call<ResponseBody> changeEmail(@Header("Authorization") String headers,
-//                                   @Path("NewEmail") String newEmail);
-//
-//
-//
-//    @PUT ("api/v1/User/VerifyEmail/{VerificationCode}")
-//    Call<ResponseBody> verifyEmail(@Header("Authorization") String headers,
-//                                   @Path("VerificationCode") String verificationCode);
-//
-//
-//
-//    /* Deprecated Methods : End */
 
 
 
-//
-//
-//    @POST("/api/v1/User/SignUp/DriverRegistration")
-//    Call<User> insertUser(@Body User user);
-//
-//
-//
-//
-//    @PUT ("/api/v1/User/UpdateProfileDriver")
-//    Call<ResponseBody> updateProfileDriver(
-//            @Header("Authorization") String headers,
-//            @Body User user
-//    );
+    // profile update calls
 
 
 
-
-
-
-    @PUT ("/api/v1/User/UpdateProfileEndUser")
+    @PUT ("/api/v1/User")
     Call<ResponseBody> updateProfileEndUser(
             @Header("Authorization") String headers,
             @Body User user
@@ -190,5 +181,10 @@ public interface UserService {
 
 
 
+    @PUT("/api/v1/User/UpdateProfileByAdmin")
+    Call<ResponseBody> updateProfileByAdmin(
+            @Header("Authorization") String headers,
+            @Body User user
+    );
 
 }

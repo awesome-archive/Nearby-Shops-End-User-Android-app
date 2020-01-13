@@ -14,11 +14,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.squareup.picasso.Picasso;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.ShopReviewThanksService;
-import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Model.ModelReviewShop.ShopReview;
 import org.nearbyshops.enduserappnew.Model.ModelReviewShop.ShopReviewThanks;
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
+import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
 import org.nearbyshops.enduserappnew.R;

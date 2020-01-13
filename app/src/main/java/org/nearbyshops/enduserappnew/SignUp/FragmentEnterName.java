@@ -10,10 +10,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.android.material.textfield.TextInputEditText;
+
+
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.R;
 import org.nearbyshops.enduserappnew.SignUp.Interfaces.ShowFragmentSignUp;
 import org.nearbyshops.enduserappnew.SignUp.PrefSignUp.PrefrenceSignUp;
+
 
 /**
  * Created by sumeet on 27/6/17.
@@ -22,10 +25,8 @@ import org.nearbyshops.enduserappnew.SignUp.PrefSignUp.PrefrenceSignUp;
 public class FragmentEnterName extends Fragment {
 
 
-    @BindView(R.id.name)
-    TextInputEditText name;
-    @BindView(R.id.referrar_user_id)
-    TextInputEditText referrerUserID;
+    @BindView(R.id.name) TextInputEditText name;
+    @BindView(R.id.referrar_user_id) TextInputEditText referrerUserID;
 
 
 
@@ -42,7 +43,7 @@ public class FragmentEnterName extends Fragment {
         ButterKnife.bind(this,rootView);
 
 
-//        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) rootView.findViewById(R2.id.toolbar);
 //        toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(),R.color.white));
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
@@ -91,7 +92,7 @@ public class FragmentEnterName extends Fragment {
 
 
 
-    void bindViews()
+    private void bindViews()
     {
 //        User user = PrefrenceSignUp.getUser(getActivity());
 //
@@ -109,7 +110,7 @@ public class FragmentEnterName extends Fragment {
 
 
 
-    void saveDataFromViews()
+    private void saveDataFromViews()
     {
         user.setName(name.getText().toString());
 

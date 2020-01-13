@@ -209,6 +209,9 @@ public class User {
 
     private User userProfileGlobal;
 
+    private ShopStaffPermissions rt_shop_staff_permissions;
+    private DeliveryGuyData rt_delivery_guy_data;
+
 
 
 
@@ -237,6 +240,22 @@ public class User {
 
     // Getters and Setters
 
+
+    public ShopStaffPermissions getRt_shop_staff_permissions() {
+        return rt_shop_staff_permissions;
+    }
+
+    public void setRt_shop_staff_permissions(ShopStaffPermissions rt_shop_staff_permissions) {
+        this.rt_shop_staff_permissions = rt_shop_staff_permissions;
+    }
+
+    public DeliveryGuyData getRt_delivery_guy_data() {
+        return rt_delivery_guy_data;
+    }
+
+    public void setRt_delivery_guy_data(DeliveryGuyData rt_delivery_guy_data) {
+        this.rt_delivery_guy_data = rt_delivery_guy_data;
+    }
 
     public String getRt_phone_country_code() {
         return rt_phone_country_code;

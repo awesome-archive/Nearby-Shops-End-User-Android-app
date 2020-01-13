@@ -12,11 +12,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.squareup.picasso.Picasso;
-import org.nearbyshops.enduserappnew.CartItemList.CartItemListActivity;
-import org.nearbyshops.enduserappnew.Model.Shop;
+
 import org.nearbyshops.enduserappnew.Model.ModelStats.CartStats;
+import org.nearbyshops.enduserappnew.Model.Shop;
+import org.nearbyshops.enduserappnew.CartItemList.CartItemListActivity;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
-import org.nearbyshops.enduserappnew.Preferences.UtilityFunctions;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
 import org.nearbyshops.enduserappnew.R;
 
 import java.util.List;
@@ -38,6 +39,8 @@ public class CartsListAdapter extends RecyclerView.Adapter<CartsListAdapter.View
 
 
 
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -46,6 +49,9 @@ public class CartsListAdapter extends RecyclerView.Adapter<CartsListAdapter.View
 
         return new ViewHolder(view);
     }
+
+
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -86,7 +92,7 @@ public class CartsListAdapter extends RecyclerView.Adapter<CartsListAdapter.View
             }
 
 
-//            imagePath = UtilityGeneral.getImageEndpointURL(MyApplication.getAppContext())
+//            imagePath = UtilityGeneral.getImageEndpointURL(MyApplicationCoreNew.getAppContext())
 //                    + dataset.get(position).getShop().getLogoImagePath();
 
 //            imagePath = UtilityGeneral.getServiceURL(context) + "/api/v1/Shop/Image/three_hundred_"

@@ -17,18 +17,21 @@ import butterknife.OnClick;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import okhttp3.OkHttpClient;
+
 import org.nearbyshops.enduserappnew.API.LoginUsingOTPService;
 import org.nearbyshops.enduserappnew.API.ServiceConfigurationService;
-import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
-import org.nearbyshops.enduserappnew.Markets.Interfaces.listItemMarketNotifications;
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationGlobal;
 import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationLocal;
+import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
+import org.nearbyshops.enduserappnew.Markets.Interfaces.listItemMarketNotifications;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
 import org.nearbyshops.enduserappnew.Preferences.PrefLoginGlobal;
 import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
 import org.nearbyshops.enduserappnew.R;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -246,7 +249,7 @@ public class ViewHolderMarket extends RecyclerView.ViewHolder implements View.On
 
 
 
-//            PrefGeneral.getServiceURL(MyApplication.getAppContext())
+//            PrefGeneral.getServiceURL(MyApplicationCoreNew.getAppContext())
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -254,6 +257,7 @@ public class ViewHolderMarket extends RecyclerView.ViewHolder implements View.On
                 .baseUrl(configurationGlobal.getServiceURL())
                 .client(new OkHttpClient().newBuilder().build())
                 .build();
+
 
 
 
@@ -285,6 +289,7 @@ public class ViewHolderMarket extends RecyclerView.ViewHolder implements View.On
 
                     PrefGeneral.saveServiceURL(configurationGlobal.getServiceURL(),context);
                     PrefServiceConfig.saveServiceConfigLocal(response.body(),context);
+
 
 
                     ServiceConfigurationLocal config = response.body();
@@ -450,6 +455,7 @@ public class ViewHolderMarket extends RecyclerView.ViewHolder implements View.On
 
 
 
+                    UtilityFunctions.updateFirebaseSubscriptions();
 
                     subscriber.selectMarketSuccessful(configurationGlobal,getLayoutPosition());
 

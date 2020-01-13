@@ -40,20 +40,6 @@ public class ShopItem{
 	private int availableItemQuantity;
 	private double itemPrice;
 
-	
-	// in certain cases the shop might take extra delivery charge for the particular item 
-	// in most of the cases this charge would be zero, unless in some cases that item is so big that 
-	// it requires special delivery. For example if you are buying some furniture. In that case the furniture
-	
-	
-	// would require some special arrangement for delivery which might involve extra delivery cost
-	//int extraDeliveryCharge = 0;
-	
-	// the minimum quantity that a end user - customer can buy 
-	//int minQuantity;
-	
-	// the maximum quantity of this item that an end user can buy
-	//int maxQuantity;
 
 
 
@@ -68,29 +54,6 @@ public class ShopItem{
 
 
 
-	public int getExtraDeliveryCharge() {
-		return extraDeliveryCharge;
-	}
-
-	public void setExtraDeliveryCharge(int extraDeliveryCharge) {
-		this.extraDeliveryCharge = extraDeliveryCharge;
-	}
-
-	public Timestamp getDateTimeAdded() {
-		return dateTimeAdded;
-	}
-
-	public void setDateTimeAdded(Timestamp dateTimeAdded) {
-		this.dateTimeAdded = dateTimeAdded;
-	}
-
-	public Timestamp getLastUpdateDateTime() {
-		return lastUpdateDateTime;
-	}
-
-	public void setLastUpdateDateTime(Timestamp lastUpdateDateTime) {
-		this.lastUpdateDateTime = lastUpdateDateTime;
-	}
 
 	public double getItemPrice() {
 		return itemPrice;

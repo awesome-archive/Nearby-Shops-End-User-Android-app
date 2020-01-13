@@ -17,10 +17,11 @@ import butterknife.OnClick;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.UserService;
 import org.nearbyshops.enduserappnew.API_SDS.UserServiceGlobal;
-import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
+import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.MyApplication;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;

@@ -3,7 +3,12 @@ package org.nearbyshops.enduserappnew.Markets;
 import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API_SDS.ServiceConfigService;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.MyApplication;
@@ -74,12 +80,12 @@ public class SubmitURLDialog extends DialogFragment implements View.OnClickListe
 
         View view = inflater.inflate(R.layout.dialog_submit_url_new, container);
 
-        dismiss_dialog_button = (ImageView) view.findViewById(R.id.dialog_dismiss_icon);
-        cancel_button = (TextView) view.findViewById(R.id.cancel_button);
-        submit_button = (TextView) view.findViewById(R.id.submit_button);
-        service_url = (EditText) view.findViewById(R.id.service_url);
-//        password = (EditText) view.findViewById(R.id.password);
-        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+        dismiss_dialog_button = view.findViewById(R.id.dialog_dismiss_icon);
+        cancel_button = view.findViewById(R.id.cancel_button);
+        submit_button = view.findViewById(R.id.submit_button);
+        service_url = view.findViewById(R.id.service_url);
+        progressBar = view.findViewById(R.id.progress_bar);
+
 
         createMarketMessage = view.findViewById(R.id.create_market_message);
 
@@ -89,6 +95,39 @@ public class SubmitURLDialog extends DialogFragment implements View.OnClickListe
         cancel_button.setOnClickListener(this);
         submit_button.setOnClickListener(this);
         dismiss_dialog_button.setOnClickListener(this);
+
+
+
+        service_url.setText("http://");
+        Selection.setSelection(service_url.getText(), service_url.getText().length());
+
+
+        service_url.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().startsWith("http://")){
+                    service_url.setText("http://");
+                    Selection.setSelection(service_url.getText(), service_url.getText().length());
+
+                }
+
+            }
+        });
+
 
         return view;
     }
@@ -146,14 +185,21 @@ public class SubmitURLDialog extends DialogFragment implements View.OnClickListe
 
 
 
-    void createMarketMessage()
+    private void createMarketMessage()
     {
-        showToastMessage("Create market click !");
+        String url = "https://nearbyshops.org";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
 
 
-    void submit_click()
+
+
+
+
+    private void submit_click()
     {
 
 
@@ -164,6 +210,14 @@ public class SubmitURLDialog extends DialogFragment implements View.OnClickListe
 
             return;
         }
+        else if(service_url.getText().toString().equals("http://"))
+        {
+
+            service_url.setError("Enter Market URL");
+            service_url.requestFocus();
+            return;
+        }
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -181,6 +235,11 @@ public class SubmitURLDialog extends DialogFragment implements View.OnClickListe
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(!isVisible())
+                {
+                    return;
+                }
 
                 if(response.code()==200)
                 {
@@ -202,6 +261,13 @@ public class SubmitURLDialog extends DialogFragment implements View.OnClickListe
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                if(!isVisible())
+                {
+                    return;
+                }
+
+
+
                 progressBar.setVisibility(View.INVISIBLE);
                 submit_button.setVisibility(View.VISIBLE);
                 showToastMessage("Failed !");
@@ -213,7 +279,7 @@ public class SubmitURLDialog extends DialogFragment implements View.OnClickListe
 
 
 
-    void showToastMessage(String message)
+    private void showToastMessage(String message)
     {
         Toast.makeText(getActivity(),message, Toast.LENGTH_SHORT).show();
     }
@@ -223,25 +289,16 @@ public class SubmitURLDialog extends DialogFragment implements View.OnClickListe
 
 
 
-    void signUp_click()
+    private void signUp_click()
     {
-//        Intent intent = new Intent(getContext(),SignUp.class);
-//        startActivity(intent);
-
 
         ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-//        ClipData clip = ClipData.newPlainText("URL", serviceURL.getText().toString());
-//        clipboard.setPrimaryClip(clip);
-
 
         if(clipboard.getPrimaryClip()!=null)
         {
             service_url.setText(clipboard.getPrimaryClip().getItemAt(0).getText());
         }
 
-
-
-//        dismiss();
     }
 
 }

@@ -17,11 +17,12 @@ import butterknife.OnTextChanged;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
+
 import org.nearbyshops.enduserappnew.API.LoginUsingOTPService;
 import org.nearbyshops.enduserappnew.API_SDS.UserServiceGlobal;
+import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Interfaces.NotifyAboutLogin;
-import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.MyApplication;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
@@ -32,6 +33,8 @@ import org.nearbyshops.enduserappnew.SignUp.ForgotPassword.ForgotPassword;
 import org.nearbyshops.enduserappnew.SignUp.PrefSignUp.PrefrenceForgotPassword;
 import org.nearbyshops.enduserappnew.SignUp.PrefSignUp.PrefrenceSignUp;
 import org.nearbyshops.enduserappnew.SignUp.SignUp;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -289,7 +292,9 @@ public class LoginGlobalFragment extends Fragment {
 
 
 
-    void loginToGlobalEndpoint()
+
+
+    private void loginToGlobalEndpoint()
     {
         if(!validateData())
         {
@@ -376,10 +381,6 @@ public class LoginGlobalFragment extends Fragment {
 
 
 
-
-
-
-
 //                    PrefOneSignal.saveToken(getActivity(),PrefOneSignal.getLastToken(getActivity()));
 //
 //                    if(PrefOneSignal.getToken(getActivity())!=null)
@@ -401,6 +402,10 @@ public class LoginGlobalFragment extends Fragment {
                     {
 //                        showToastMessage("Notify about login !");
                         ((NotifyAboutLogin) getActivity()).loginSuccess();
+
+
+
+
                     }
 
 
@@ -447,7 +452,7 @@ public class LoginGlobalFragment extends Fragment {
 
 
 
-    void loginToLocalEndpoint()
+    private void loginToLocalEndpoint()
     {
         if(!validateData())
         {
@@ -584,6 +589,8 @@ public class LoginGlobalFragment extends Fragment {
 
 
 
+                    UtilityFunctions.updateFirebaseSubscriptions();
+
 
 
 
@@ -679,7 +686,7 @@ public class LoginGlobalFragment extends Fragment {
 //
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .baseUrl(PrefServiceConfig.getSDSURL(MyApplication.getAppContext()))
+//                .baseUrl(PrefServiceConfig.getSDSURL(MyApplicationCoreNew.getAppContext()))
 //                .client(new OkHttpClient().newBuilder().build())
 //                .build();
 //

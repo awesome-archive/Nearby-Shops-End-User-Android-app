@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.UserService;
 import org.nearbyshops.enduserappnew.API_SDS.UserServiceGlobal;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
@@ -32,8 +33,9 @@ import org.nearbyshops.enduserappnew.MyApplication;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
 import org.nearbyshops.enduserappnew.R;
-import org.nearbyshops.enduserappnew.SignUp.Interfaces.ShowFragmentForgotPassword;
 import org.nearbyshops.enduserappnew.SignUp.PrefSignUp.PrefrenceForgotPassword;
+import org.nearbyshops.enduserappnew.SignUp.Interfaces.ShowFragmentForgotPassword;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,7 +59,7 @@ public class FragmentEnterCredentials extends Fragment {
     @BindView(R.id.text_input_email) TextInputLayout emailLayout;
 
 //    String phoneWithoutCountryCode;
-//    @BindView(R.id.ccp) CountryCodePicker ccp;
+//    @BindView(R2.id.ccp) CountryCodePicker ccp;
     @BindView(R.id.phone)
 TextInputEditText phone;
     @BindView(R.id.email) TextInputEditText email;

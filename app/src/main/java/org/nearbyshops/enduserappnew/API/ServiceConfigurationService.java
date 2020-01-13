@@ -1,10 +1,11 @@
 package org.nearbyshops.enduserappnew.API;
 
 
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import org.nearbyshops.enduserappnew.Model.Image;
 import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationLocal;
+
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -14,9 +15,11 @@ import retrofit2.http.*;
 public interface ServiceConfigurationService {
 
 
-    @GET("/api/serviceconfiguration")
+    @GET("/api/ServiceConfiguration")
     Call<ServiceConfigurationLocal> getServiceConfiguration(@Query("latCenter") Double latCenter,
                                                             @Query("lonCenter") Double lonCenter);
+
+
 
     @PUT("/api/ServiceConfiguration")
     Call<ResponseBody> putServiceConfiguration(@Header("Authorization") String headers,

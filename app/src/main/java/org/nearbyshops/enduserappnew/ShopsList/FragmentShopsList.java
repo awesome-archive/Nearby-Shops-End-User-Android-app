@@ -21,22 +21,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.wunderlist.slidinglayer.SlidingLayer;
+
 import org.nearbyshops.enduserappnew.API.ShopService;
+import org.nearbyshops.enduserappnew.Model.ModelEndPoints.ShopEndPoint;
+import org.nearbyshops.enduserappnew.Model.Shop;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Interfaces.NotifySearch;
 import org.nearbyshops.enduserappnew.Interfaces.NotifySort;
+import org.nearbyshops.enduserappnew.Interfaces.ShowFragment;
 import org.nearbyshops.enduserappnew.ItemsInShopByCategory.ItemsInShopByCat;
-import org.nearbyshops.enduserappnew.Model.Shop;
-import org.nearbyshops.enduserappnew.Model.ModelEndPoints.ShopEndPoint;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLocation;
 import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
-import org.nearbyshops.enduserappnew.Preferences.PrefShopHome;
+import org.nearbyshops.enduserappnew.PreferencesDeprecated.PrefShopHome;
 import org.nearbyshops.enduserappnew.R;
-import org.nearbyshops.enduserappnew.ShopsList.Interfaces.NotifyDatasetChanged;
-import org.nearbyshops.enduserappnew.ShopsList.SlidingLayerSort.PrefSortShopsByCategory;
-import org.nearbyshops.enduserappnew.ShopsList.SlidingLayerSort.SlidingLayerSortShops;
-import org.nearbyshops.enduserappnew.ShopsList.ViewHolders.ViewHolderShop;
+import org.nearbyshops.enduserappnew.SlidingLayerSort.PreferencesSort.PrefSortShopsByCategory;
+import org.nearbyshops.enduserappnew.SlidingLayerSort.SlidingLayerSortShops;
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderShop;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,7 +45,7 @@ import retrofit2.Response;
 import javax.inject.Inject;
 import java.util.ArrayList;
 
-import static org.nearbyshops.enduserappnew.ItemsInShopByCategory.BackupDeprecated.ItemsInShopByCatDeprecated.TAG_SLIDING;
+
 
 
 //import icepick.State;
@@ -53,27 +54,34 @@ import static org.nearbyshops.enduserappnew.ItemsInShopByCategory.BackupDeprecat
  * Created by sumeet on 25/5/16.
  */
 public class FragmentShopsList extends Fragment implements
-        SwipeRefreshLayout.OnRefreshListener, NotifySort, NotifyDatasetChanged, NotifySearch ,
+        SwipeRefreshLayout.OnRefreshListener, NotifySort, NotifySearch ,
         ViewHolderShop.ListItemClick {
 
-        ArrayList<Object> dataset = new ArrayList<>();
+
+    private static final String TAG_SLIDING = "tag_sliding_layer_sort_shops";
+    private ArrayList<Object> dataset = new ArrayList<>();
 
         boolean isSaved;
+
+
         @Inject
         ShopService shopService;
 
-        RecyclerView recyclerView;
-        Adapter adapter;
+
+        private RecyclerView recyclerView;
+        private Adapter adapter;
 //        GridLayoutManager layoutManager;
 
         SwipeRefreshLayout swipeContainer;
 
         final private int limit = 10;
-        int offset = 0;
-        int item_count = 0;
+        private int offset = 0;
+        private int item_count = 0;
 
-        boolean switchMade = false;
-        boolean isDestroyed;
+        private boolean switchMade = false;
+        private boolean isDestroyed;
+
+
 
 
 
@@ -82,18 +90,20 @@ public class FragmentShopsList extends Fragment implements
 
 //    @BindView(R.id.icon_list) ImageView mapIcon;
     @BindView(R.id.shop_count_indicator) TextView shopCountIndicator;
-    @BindView(R.id.slidingLayer)
-    SlidingLayer slidingLayer;
+    @BindView(R.id.slidingLayer) SlidingLayer slidingLayer;
 
 
 
     @BindView(R.id.empty_screen) LinearLayout emptyScreen;
     @BindView(R.id.progress_bar_fetching_location) LinearLayout progressBarFetchingLocation;
 
+    @BindView(R.id.empty_screen_message) TextView emptyScreenMessage;
+
 
     @BindView(R.id.service_name) TextView serviceName;
 
 
+    @BindView(R.id.button_try_again) TextView buttonTryAgain;
 
 
 
@@ -181,10 +191,16 @@ public class FragmentShopsList extends Fragment implements
             {
                 serviceName.setVisibility(View.VISIBLE);
                 serviceName.setText(PrefServiceConfig.getServiceName(getActivity()));
+
+                buttonTryAgain.setText("Change Market");
+                emptyScreenMessage.setText("Uh .. oh .. no shops available at your location .. change your market ... and explore other markets !");
             }
             else
             {
                 serviceName.setVisibility(View.GONE);
+
+                emptyScreenMessage.setText("Uh .. oh .. no shops available at your location .. change your location ... and try again");
+                buttonTryAgain.setText("Try Again");
             }
 
 
@@ -220,38 +236,6 @@ public class FragmentShopsList extends Fragment implements
 
 
 
-
-
-        @Override
-        public void notifyDatasetChanged()
-        {
-//            if(dataset == null)
-//            {
-//                if(getActivity() instanceof GetDataset)
-//                {
-//                    dataset = ((GetDataset)getActivity()).getDataset();
-//                }
-//            }
-
-
-            setupRecyclerView();
-
-        }
-
-
-
-
-
-
-
-
-       /* void notifyDataset()
-        {
-            if(getActivity() instanceof NotifyDataset)
-            {
-                ((NotifyDataset)getActivity()).setDataset(dataset);
-            }
-        }*/
 
 
 
@@ -558,7 +542,6 @@ public class FragmentShopsList extends Fragment implements
 
 
 
-                    notifyMapDataChanged();
                     swipeContainer.setRefreshing(false);
 
                 }
@@ -585,10 +568,24 @@ public class FragmentShopsList extends Fragment implements
 
 
 
+
         @OnClick(R.id.button_try_again)
         void tryAgainClick()
         {
-            makeRefreshNetworkCall();
+
+            if(PrefGeneral.getMultiMarketMode(getActivity()))
+            {
+
+                if(getActivity() instanceof ShowFragment)
+                {
+                    ((ShowFragment) getActivity()).showProfileFragment();
+                }
+            }
+            else
+            {
+
+                makeRefreshNetworkCall();
+            }
         }
 
 
@@ -596,8 +593,7 @@ public class FragmentShopsList extends Fragment implements
 
 
 
-
-        void showToastMessage(String message)
+        private void showToastMessage(String message)
         {
             Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
         }
@@ -630,24 +626,6 @@ public class FragmentShopsList extends Fragment implements
     public void notifySortChanged() {
         makeRefreshNetworkCall();
     }
-
-
-
-
-
-
-    private void notifyMapDataChanged()
-    {
-        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("map_tag");
-
-        if(fragment instanceof NotifyDatasetChanged)
-        {
-            ((NotifyDatasetChanged)fragment).notifyDatasetChanged();
-        }
-    }
-
-
-
 
 
 

@@ -1,8 +1,9 @@
 package org.nearbyshops.enduserappnew.API_SDS;
 
-import okhttp3.ResponseBody;
+import org.nearbyshops.enduserappnew.Model.ModelEndPoints.MarketReviewEndPoint;
 import org.nearbyshops.enduserappnew.Model.ModelReviewMarket.MarketReview;
-import org.nearbyshops.enduserappnew.Model.ModelReviewMarket.MarketReviewEndPoint;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 

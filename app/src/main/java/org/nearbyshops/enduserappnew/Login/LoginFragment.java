@@ -17,10 +17,11 @@ import butterknife.OnTextChanged;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
+
 import org.nearbyshops.enduserappnew.API.UserService;
+import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Interfaces.NotifyAboutLogin;
-import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.MyApplication;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
@@ -146,6 +147,8 @@ public class LoginFragment extends Fragment {
 //            ((ServiceIndicatorFragment)fragment).refresh();
 //        }
 //    }
+
+
 
 
 
@@ -435,7 +438,7 @@ public class LoginFragment extends Fragment {
 //
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .baseUrl(PrefServiceConfig.getSDSURL(MyApplication.getAppContext()))
+//                .baseUrl(PrefServiceConfig.getSDSURL(MyApplicationCoreNew.getAppContext()))
 //                .client(new OkHttpClient().newBuilder().build())
 //                .build();
 //

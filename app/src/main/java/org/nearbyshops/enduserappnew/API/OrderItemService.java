@@ -1,7 +1,9 @@
 package org.nearbyshops.enduserappnew.API;
 
 
-import org.nearbyshops.enduserappnew.Model.ModelCartOrder.Endpoints.OrderItemEndPoint;
+
+import org.nearbyshops.enduserappnew.Model.ModelEndPoints.OrderItemEndPoint;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

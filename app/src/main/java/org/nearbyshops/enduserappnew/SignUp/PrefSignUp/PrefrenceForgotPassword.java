@@ -3,9 +3,11 @@ package org.nearbyshops.enduserappnew.SignUp.PrefSignUp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
+
+
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
-import org.nearbyshops.enduserappnew.Preferences.UtilityFunctions;
 import org.nearbyshops.enduserappnew.R;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
 
 import static android.content.Context.MODE_PRIVATE;
 

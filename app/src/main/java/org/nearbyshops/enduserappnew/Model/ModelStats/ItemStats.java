@@ -3,10 +3,15 @@ package org.nearbyshops.enduserappnew.Model.ModelStats;
 
 
 
+
+
+
 /**
  * Created by sumeet on 26/5/16.
  */
 public class ItemStats{
+
+
 
     private int itemID;
     private double min_price;
@@ -16,9 +21,6 @@ public class ItemStats{
 
     private double rating_avg;
     private int ratingCount;
-
-
-
 
 
 

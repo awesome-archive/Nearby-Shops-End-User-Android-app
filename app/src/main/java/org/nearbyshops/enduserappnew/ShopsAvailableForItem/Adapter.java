@@ -16,17 +16,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.squareup.picasso.Picasso;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.CartItemService;
 import org.nearbyshops.enduserappnew.API.CartStatsService;
-import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Model.Item;
-import org.nearbyshops.enduserappnew.Model.Shop;
-import org.nearbyshops.enduserappnew.Model.ShopItem;
 import org.nearbyshops.enduserappnew.Model.ModelCartOrder.CartItem;
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.Model.ModelStats.CartStats;
+import org.nearbyshops.enduserappnew.Model.Shop;
+import org.nearbyshops.enduserappnew.Model.ShopItem;
+import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
 import org.nearbyshops.enduserappnew.R;
 import org.nearbyshops.enduserappnew.Utility.InputFilterMinMax;
 import retrofit2.Call;
@@ -55,7 +57,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
 
 
-    private Map<Integer,CartItem> cartItemMap = new HashMap<>();
+    private Map<Integer, CartItem> cartItemMap = new HashMap<>();
     private Map<Integer, CartStats> cartStatsMap = new HashMap<>();
 
 
@@ -212,7 +214,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
             if(cartItem!=null)
             {
-                holder.itemQuantity.setText(String.valueOf(cartItem.getItemQuantity()));
+                holder.itemQuantity.setText(UtilityFunctions.refinedString(cartItem.getItemQuantity()));
                 holder.shopItemListItem.setBackgroundResource(R.color.backgroundTinted);
 
                 double total = shopItem.getItemPrice() * cartItem.getItemQuantity();
@@ -226,7 +228,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
                 holder.shopItemListItem.setBackgroundResource(R.color.shopItemColor);
                 //holder.shopItemListItem.setBackgroundColor(22000000);
-
             }
 
 
@@ -242,6 +243,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 holder.cartTotal.setText("Cart Total : "  + PrefGeneral.getCurrencySymbol(context) + " " + String.valueOf(cartStats.getCart_Total()));
             }
         //}
+
+
 
 
         if(shopItem!=null)
@@ -294,7 +297,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
 
 
-//            String imagePath = UtilityGeneral.getImageEndpointURL(MyApplication.getAppContext())
+//            String imagePath = UtilityGeneral.getImageEndpointURL(MyApplicationCoreNew.getAppContext())
 //                    + shop.getLogoImagePath();
 
 
@@ -339,6 +342,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             }
         }
     }
+
+
 
 
 
@@ -426,7 +431,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    setFilter();
+//                    setFilter();
 
                 }
 
@@ -478,16 +483,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
                         try{
 
-                            if(Integer.parseInt(itemQuantity.getText().toString())>availableItems)
+                            if(Double.parseDouble(itemQuantity.getText().toString())>availableItems)
                             {
 
                                 return;
                             }
 
-                            total = shopItem.getItemPrice() * Integer.parseInt(itemQuantity.getText().toString());
+                            total = shopItem.getItemPrice() * Double.parseDouble(itemQuantity.getText().toString());
 
 
-                            if(Integer.parseInt(itemQuantity.getText().toString())==0)
+                            if(Double.parseDouble(itemQuantity.getText().toString())==0)
                             {
                                 if(cartItem==null)
                                 {
@@ -595,13 +600,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
             if (!itemQuantity.getText().toString().equals("")) {
 
-                cartItem.setItemQuantity(Integer.parseInt(itemQuantity.getText().toString()));
+                cartItem.setItemQuantity(Double.parseDouble(itemQuantity.getText().toString()));
             }
 
             if (!cartItemMap.containsKey(dataset.get(getLayoutPosition()).getShopID()))
             {
 
-                if (Integer.parseInt(itemQuantity.getText().toString()) == 0) {
+                if (Double.parseDouble(itemQuantity.getText().toString()) == 0) {
                     showToastMessage("Please select quantity greater than Zero !");
 
                 } else {
@@ -661,13 +666,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             } else {
 
 
-                int quantity = Integer.parseInt(itemQuantity.getText().toString());
+                double quantity = Double.parseDouble(itemQuantity.getText().toString());
 
                 if(quantity==0)
                 {
                     // Delete from cart
 
-                    //UtilityGeneral.getEndUserID(MyApplication.getAppContext())
+                    //UtilityGeneral.getEndUserID(MyApplicationCoreNew.getAppContext())
 //                    User endUser = PrefLogin.getUser(context);
 //                    if(endUser==null)
 //                    {
@@ -732,7 +737,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 {
                     // Update from cart
 
-                    //UtilityGeneral.getEndUserID(MyApplication.getAppContext())
+                    //UtilityGeneral.getEndUserID(MyApplicationCoreNew.getAppContext())
 //                    User endUser = PrefLogin.getUser(context);
 //
 //                    if(endUser==null)
@@ -830,7 +835,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
                 try{
 
-                    if(Integer.parseInt(itemQuantity.getText().toString())<=0) {
+                    if(Double.parseDouble(itemQuantity.getText().toString())<=0) {
 
                         if(cartStats!=null) {
 
@@ -846,12 +851,29 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
                         }
 
+
+
+
+                        itemQuantity.setText("0");
                         return;
                     }
 
-                    itemQuantity.setText(String.valueOf(Integer.parseInt(itemQuantity.getText().toString()) - 1));
 
-                    total = shopItem.getItemPrice() * Integer.parseInt(itemQuantity.getText().toString());
+
+                    if((Double.parseDouble(itemQuantity.getText().toString()) - 1) < 0)
+                    {
+                        itemQuantity.setText("0");
+                    }
+                    else
+                    {
+                        itemQuantity.setText(UtilityFunctions.refinedString(Double.parseDouble(itemQuantity.getText().toString()) - 1));
+                    }
+
+
+
+
+
+                    total = shopItem.getItemPrice() * Double.parseDouble(itemQuantity.getText().toString());
 
                 }
                 catch (Exception ex)
@@ -894,7 +916,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     if (cartStats != null) {
 
                         if (cartItem == null) {
-                            if (Integer.parseInt(itemQuantity.getText().toString()) > 0) {
+                            if (Double.parseDouble(itemQuantity.getText().toString()) > 0) {
                                 itemsInCart.setText(String.valueOf(cartStats.getItemsInCart() + 1) + " " + "Items in Cart");
                             }
 
@@ -912,15 +934,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
                 try {
 
-                    if (Integer.parseInt(itemQuantity.getText().toString()) >= availableItems) {
+                    if (Double.parseDouble(itemQuantity.getText().toString()) >= availableItems) {
                         return;
                     }
 
 
-                        itemQuantity.setText(String.valueOf(Integer.parseInt(itemQuantity.getText().toString()) + 1));
+                        itemQuantity.setText(UtilityFunctions.refinedString(Double.parseDouble(itemQuantity.getText().toString()) + 1));
 
 
-                    total = shopItem.getItemPrice() * Integer.parseInt(itemQuantity.getText().toString());
+                    total = shopItem.getItemPrice() * Double.parseDouble(itemQuantity.getText().toString());
 
                 }catch (Exception ex)
                 {

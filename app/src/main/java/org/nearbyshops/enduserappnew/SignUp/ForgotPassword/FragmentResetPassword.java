@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.UserService;
 import org.nearbyshops.enduserappnew.API_SDS.UserServiceGlobal;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
@@ -25,8 +26,9 @@ import org.nearbyshops.enduserappnew.MyApplication;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
 import org.nearbyshops.enduserappnew.R;
-import org.nearbyshops.enduserappnew.SignUp.Interfaces.ShowFragmentForgotPassword;
 import org.nearbyshops.enduserappnew.SignUp.PrefSignUp.PrefrenceForgotPassword;
+import org.nearbyshops.enduserappnew.SignUp.Interfaces.ShowFragmentForgotPassword;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,18 +44,18 @@ import javax.inject.Inject;
 public class FragmentResetPassword extends Fragment {
 
 
-//    @BindView(R.id.check_icon) ImageView checkIcon;
-//    @BindView(R.id.cross_icon) ImageView crossIcon;
-//    @BindView(R.id.message) TextView textAvailable;
+//    @BindView(R2.id.check_icon) ImageView checkIcon;
+//    @BindView(R2.id.cross_icon) ImageView crossIcon;
+//    @BindView(R2.id.message) TextView textAvailable;
 
 
-//    @BindView(R.id.progress_bar) ProgressBar progressBar;
-//    @BindView(R.id.verification_code) TextInputEditText verificationCode;
-//    @BindView(R.id.email_text) TextView emailText;
+//    @BindView(R2.id.progress_bar) ProgressBar progressBar;
+//    @BindView(R2.id.verification_code) TextInputEditText verificationCode;
+//    @BindView(R2.id.email_text) TextView emailText;
 
 
-//    @BindView(R.id.progress_bar_resend) ProgressBar progressBarResend;
-//    @BindView(R.id.message_resend) TextView messageResend;
+//    @BindView(R2.id.progress_bar_resend) ProgressBar progressBarResend;
+//    @BindView(R2.id.message_resend) TextView messageResend;
 
 
     @BindView(R.id.progress_bar_button)

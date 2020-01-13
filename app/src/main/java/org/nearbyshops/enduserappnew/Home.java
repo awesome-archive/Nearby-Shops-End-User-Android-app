@@ -24,11 +24,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
+
 import org.nearbyshops.enduserappnew.CartsList.CartsListFragment;
 import org.nearbyshops.enduserappnew.Interfaces.*;
-import org.nearbyshops.enduserappnew.ItemsByCategory.ItemsByCategoryFragment;
-import org.nearbyshops.enduserappnew.ItemsByCategory.Interfaces.NotifyBackPressed;
-import org.nearbyshops.enduserappnew.ItemsByCategoryDeprecated.ItemCategoriesFragmentSimple;
+import org.nearbyshops.enduserappnew.ItemsByCategory.ItemsByCatFragment;
 import org.nearbyshops.enduserappnew.LoginPlaceholder.FragmentSignInMessage;
 import org.nearbyshops.enduserappnew.Markets.Interfaces.MarketSelected;
 import org.nearbyshops.enduserappnew.Markets.MarketsFragmentNew;
@@ -41,7 +41,7 @@ import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
 import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
 import org.nearbyshops.enduserappnew.Services.UpdateServiceConfiguration;
 import org.nearbyshops.enduserappnew.ShopsList.FragmentShopsList;
-
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
 
 
 public class Home extends AppCompatActivity implements ShowFragment, NotifyAboutLogin, MarketSelected {
@@ -63,17 +63,12 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
 
 
 
-
     BottomNavigationView bottomBar;
 
     LocationManager locationManager;
     LocationListener locationListener;
 
-    // fragments
-    ItemCategoriesFragmentSimple itemsFragment;
 
-
-    boolean isFirstLaunch = true;
 
 
     public Home() {
@@ -96,6 +91,28 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
 
 //        bottomBar.setDefaultTab(R.id.tab_search);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
+
+
+        startService(new Intent(this,UpdateServiceConfiguration.class));
+
+
+
+        FirebaseApp.initializeApp(getApplicationContext());
+        UtilityFunctions.updateFirebaseSubscriptions();
+
+
+
+
+
+//        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+//        String countryCodeValue = tm.getNetworkCountryIso();
+//        Currency currency = Currency.getInstance(new Locale("",countryCodeValue));
+//        PrefGeneral.saveCurrencySymbol(currency.getSymbol(),this);
+//
+
+
+
 
 
         if (PrefGeneral.getMultiMarketMode(this)) {
@@ -187,6 +204,7 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
 
 
 
+
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
@@ -217,7 +235,7 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
                 {
                     bottomBar.getMenu().getItem(1).setChecked(true);
                 }
-                else if(fragment instanceof ItemsByCategoryFragment)
+                else if(fragment instanceof ItemsByCatFragment)
                 {
 
                     bottomBar.getMenu().getItem(0).setChecked(true);
@@ -442,19 +460,16 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
 
             showLoginFragment();
 
-
-
-
-            return;
         }
         else {
+
 
 
             if(getSupportFragmentManager().findFragmentByTag(TAG_ORDERS_FRAGMENT)==null)
             {
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, new OrdersHistoryFragment(), TAG_ORDERS_FRAGMENT)
+                        .replace(R.id.fragment_container, OrdersHistoryFragment.newInstance(true,false,false), TAG_ORDERS_FRAGMENT)
                         .commit();
 
             }
@@ -643,7 +658,6 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
 //                    .addToBackStack(null)
 //                    .commit();
 
-
         }
         else {
 
@@ -652,7 +666,7 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
             if (getSupportFragmentManager().findFragmentByTag(TAG_ITEMS_FRAGMENT) == null) {
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, new ItemsByCategoryFragment(), TAG_ITEMS_FRAGMENT)
+                        .replace(R.id.fragment_container, new ItemsByCatFragment(), TAG_ITEMS_FRAGMENT)
                         .commit();
             }
 
@@ -663,7 +677,7 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
 
 //            getSupportFragmentManager()
 //                    .beginTransaction()
-//                    .replace(R.id.fragment_container, new ItemsByCategoryFragment(), TAG_ITEMS_FRAGMENT)
+//                    .replace(R.id.fragment_container, new ItemsByCatFragment(), TAG_ITEMS_FRAGMENT)
 //                    .addToBackStack("items")
 //                    .commit();
 
@@ -693,12 +707,12 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
         }
         else {
 
-//            new ItemCategoriesFragmentSimple()
+//            new ItemsDatabaseForAdminFragment()
 
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new ItemsByCategoryFragment(), TAG_ITEMS_FRAGMENT)
+                    .replace(R.id.fragment_container, FragmentShopsList.newInstance(false), TAG_SHOPS_FRAGMENT)
                     .commit();
 
         }
@@ -745,6 +759,11 @@ public class Home extends AppCompatActivity implements ShowFragment, NotifyAbout
             super.onBackPressed();
         }
     }
+
+
+
+
+
 
 
     @Override

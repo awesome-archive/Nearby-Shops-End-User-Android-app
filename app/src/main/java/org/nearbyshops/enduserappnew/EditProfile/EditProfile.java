@@ -36,7 +36,7 @@ public class EditProfile extends AppCompatActivity implements NotifyChangePasswo
 
 
 //        overridePendingTransition(R.anim.enter_from_right,R.anim.exit_to_left);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_fragment_container);
         ButterKnife.bind(this);
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -53,7 +53,7 @@ public class EditProfile extends AppCompatActivity implements NotifyChangePasswo
 //            {
 //                getSupportFragmentManager()
 //                        .beginTransaction()
-//                        .add(R.id.fragment_container,new FragmentEditProfileGlobal(),TAG_FRAGMENT_EDIT)
+//                        .add(R.id.fragment_container,new FragmentEditProfile(),TAG_FRAGMENT_EDIT)
 //                        .commit();
 //
 //            }
@@ -68,7 +68,7 @@ public class EditProfile extends AppCompatActivity implements NotifyChangePasswo
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container,new FragmentEditProfileGlobal(),TAG_FRAGMENT_EDIT)
+                    .add(R.id.fragment_container,new FragmentEditProfile(),TAG_FRAGMENT_EDIT)
                     .commit();
         }
     }

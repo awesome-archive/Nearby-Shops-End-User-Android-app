@@ -16,18 +16,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import org.nearbyshops.enduserappnew.API.CartItemService;
 import org.nearbyshops.enduserappnew.API.CartStatsService;
-import org.nearbyshops.enduserappnew.Checkout.PlaceOrderActivity;
-import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
-import org.nearbyshops.enduserappnew.Login.Login;
-import org.nearbyshops.enduserappnew.Model.Shop;
 import org.nearbyshops.enduserappnew.Model.ModelCartOrder.CartItem;
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.Model.ModelStats.CartStats;
+import org.nearbyshops.enduserappnew.Model.Shop;
+import org.nearbyshops.enduserappnew.Checkout.PlaceOrderActivity;
+import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
+import org.nearbyshops.enduserappnew.Login.Login;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
-import org.nearbyshops.enduserappnew.Preferences.UtilityFunctions;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
 import org.nearbyshops.enduserappnew.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -270,7 +271,7 @@ public class CartItemListActivity extends AppCompatActivity
             shopName.setText(shop.getShopName());
 
 
-            String imagePath = UtilityGeneral.getImageEndpointURL(MyApplication.getAppContext())
+            String imagePath = UtilityGeneral.getImageEndpointURL(MyApplicationCoreNew.getAppContext())
                     + shop.getImagePath();
 
             Picasso.with(this)
@@ -357,6 +358,8 @@ public class CartItemListActivity extends AppCompatActivity
             swipeContainer.setRefreshing(false);
             return;
         }
+
+
 
         if(shop==null)
         {

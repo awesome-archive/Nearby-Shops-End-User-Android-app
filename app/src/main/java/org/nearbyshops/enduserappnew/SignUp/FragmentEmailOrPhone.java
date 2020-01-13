@@ -26,6 +26,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import com.hbb20.CountryCodePicker;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.UserService;
 import org.nearbyshops.enduserappnew.API_SDS.UserServiceGlobal;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
@@ -36,6 +37,7 @@ import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
 import org.nearbyshops.enduserappnew.R;
 import org.nearbyshops.enduserappnew.SignUp.Interfaces.ShowFragmentSignUp;
 import org.nearbyshops.enduserappnew.SignUp.PrefSignUp.PrefrenceSignUp;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -106,6 +108,9 @@ public class FragmentEmailOrPhone extends Fragment {
                 .getNetComponent().Inject(this);
 
     }
+
+
+
 
     @Nullable
     @Override

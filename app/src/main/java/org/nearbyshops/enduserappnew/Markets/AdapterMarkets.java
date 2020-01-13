@@ -10,16 +10,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.google.gson.Gson;
+
+import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
+import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationGlobal;
+import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationLocal;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Markets.Model.MarketsList;
 import org.nearbyshops.enduserappnew.Markets.Model.SignInMarker;
 import org.nearbyshops.enduserappnew.Markets.ViewHolders.*;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.Models.HeaderItemsList;
+import org.nearbyshops.enduserappnew.ViewHolderDeprecated.ViewHolderSavedMarketList;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.Models.EmptyScreenDataListItem;
 import org.nearbyshops.enduserappnew.Markets.Interfaces.listItemMarketNotifications;
-import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
-import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationGlobal;
-import org.nearbyshops.enduserappnew.Model.ModelServiceConfig.ServiceConfigurationLocal;
 import org.nearbyshops.enduserappnew.R;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.Models.HeaderTitle;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.ViewHolderEmptyScreenListItem;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.ViewHolderHeader;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.ViewHolderSignIn;
+import org.nearbyshops.enduserappnew.ViewHolderUserProfile.ViewHolderUserProfile;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -40,6 +47,7 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_Market = 5;
     private static final int view_type_sign_in = 6;
     private static final int VIEW_TYPE_SCROLL_PROGRESS_BAR = 7;
+    private static final int VIEW_TYPE_create_market = 8;
 
 
     @Inject Gson gson;
@@ -53,8 +61,6 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         this.dataset = dataset;
         this.fragment = fragment;
-
-
 
 
         DaggerComponentBuilder.getInstance()
@@ -85,8 +91,10 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
         else if(viewType==view_type_saved_markets_list)
         {
 
-            return ViewHolderSavedMarketList.create(parent,fragment.getActivity(), (listItemMarketNotifications) fragment);
 
+
+            return ViewHolderSavedMarketList.create(parent,fragment.getActivity(), (listItemMarketNotifications) fragment);
+//            return ViewHolderHorizontalList.create(parent,fragment.getActivity(),fragment);
         }
         else if(viewType == view_type_user_profile)
         {
@@ -105,7 +113,8 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
 //
 //            return new ViewHolderHeaderMarket(view);
 
-            return ViewHolderHeaderMarket.create(parent,fragment.getActivity());
+
+            return ViewHolderHeader.create(parent,fragment.getActivity());
 
         }
         else if(viewType == view_type_sign_in)
@@ -123,13 +132,19 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return ViewHolderMarket.create(parent,fragment.getActivity(), (listItemMarketNotifications) fragment);
 
 
-        } else if (viewType == VIEW_TYPE_SCROLL_PROGRESS_BAR) {
+        }
+        else if (viewType == VIEW_TYPE_SCROLL_PROGRESS_BAR) {
 
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item_progress_bar, parent, false);
 
             return new LoadingViewHolder(view);
         }
+        else if(viewType==VIEW_TYPE_create_market)
+        {
+            return ViewHolderEmptyScreenListItem.create(parent,fragment.getActivity(),fragment);
+        }
+
 
 
         return null;
@@ -166,7 +181,7 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
         {
             return view_type_user_profile;
         }
-        else if(dataset.get(position) instanceof HeaderItemsList)
+        else if(dataset.get(position) instanceof HeaderTitle)
         {
             return view_type_markets_header;
         }
@@ -174,6 +189,12 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             return VIEW_TYPE_Market;
         }
+        else if(dataset.get(position) instanceof EmptyScreenDataListItem)
+        {
+
+            return VIEW_TYPE_create_market;
+        }
+
 
         return -1;
     }
@@ -217,6 +238,17 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((ViewHolderMarket)holderVH).setItem((ServiceConfigurationGlobal) dataset.get(position));
 
         }
+        else if(holderVH instanceof ViewHolderEmptyScreenListItem)
+        {
+            if(dataset.get(position) instanceof EmptyScreenDataListItem)
+            {
+                ((ViewHolderEmptyScreenListItem) holderVH).setItem((EmptyScreenDataListItem) dataset.get(position));
+            }
+        }
+        else if(holderVH instanceof ViewHolderHeader)
+        {
+            ((ViewHolderHeader) holderVH).setItem((HeaderTitle) dataset.get(position));
+        }
         else if (holderVH instanceof LoadingViewHolder) {
 
 
@@ -244,37 +276,16 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
 
-
     public void setData(List<Object> data)
     {
         dataset = data;
     }
 
 
-//
-//    void setTotalItemsCount(int totalItemsCount)
-//    {
-//        total_items_count = totalItemsCount;
-//    }
-
-
-
 
 
     @Override
     public int getItemCount() {
-
-
-//
-//        if(dataset!=null)
-//        {
-//            return (dataset.size()+1);
-//        }
-//        else
-//        {
-//            return 0;
-//        }
-
 
         return (dataset.size()+1);
     }
@@ -292,13 +303,5 @@ public class AdapterMarkets extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ButterKnife.bind(this,itemView);
         }
     }
-
-
-
-
-    public class SavedMarketsMarker{
-
-    }
-
 
 }

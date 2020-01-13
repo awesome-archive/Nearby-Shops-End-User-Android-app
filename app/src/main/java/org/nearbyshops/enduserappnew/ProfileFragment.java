@@ -23,15 +23,23 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import com.google.firebase.FirebaseApp;
 import com.squareup.picasso.Picasso;
+
 import org.nearbyshops.enduserappnew.API.UserService;
-import org.nearbyshops.enduserappnew.EditProfile.EditProfile;
-import org.nearbyshops.enduserappnew.EditProfile.FragmentEditProfileGlobal;
-import org.nearbyshops.enduserappnew.Interfaces.NotifyAboutLogin;
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
+import org.nearbyshops.enduserappnew.EditProfile.EditProfile;
+import org.nearbyshops.enduserappnew.EditProfile.FragmentEditProfile;
+import org.nearbyshops.enduserappnew.Interfaces.NotifyAboutLogin;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
 import org.nearbyshops.enduserappnew.Preferences.PrefLoginGlobal;
+import org.nearbyshops.enduserappnew.PreferencesDeprecated.PrefShopHome;
+import org.nearbyshops.enduserappnew.aSellerModule.DeliveryGuyHome.DeliveryHome;
+import org.nearbyshops.enduserappnew.aSellerModule.ShopAdminHome.ShopAdminHome;
+import org.nearbyshops.enduserappnew.adminModule.AdminDashboard.AdminDashboard;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -113,6 +121,9 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
 
 
+        bindDashboard();
+
+
         return rootView;
     }
 
@@ -121,7 +132,9 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
-    void setupSwipeContainer()
+
+
+    private void setupSwipeContainer()
     {
 
         if(swipeContainer!=null) {
@@ -138,12 +151,78 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
+    @BindView(R.id.dashboard_name) TextView dashboardName;
+    @BindView(R.id.dashboard_description) TextView dashboardDescription;
+
+
+    private void bindDashboard()
+    {
+        User user = PrefLogin.getUser(getActivity());
+
+        if(user.getRole()==User.ROLE_SHOP_ADMIN_CODE)
+        {
+            dashboardName.setText("Shop Dashboard");
+            dashboardDescription.setText("Press here to access the shop dashboard !");
+        }
+        else if(user.getRole()==User.ROLE_DELIVERY_GUY_SELF_CODE)
+        {
+
+            dashboardName.setText("Delivery Dashboard");
+            dashboardDescription.setText("Press here to access the Delivery dashboard !");
+        }
+        else if(user.getRole()==User.ROLE_ADMIN_CODE)
+        {
+            dashboardName.setText("Admin Dashboard");
+            dashboardDescription.setText("Press here to access the admin dashboard !");
+
+        }
+        else if(user.getRole()==User.ROLE_END_USER_CODE)
+        {
+            dashboardName.setText("Become a Seller : Create Shop");
+            dashboardDescription.setText("Press here to create a shop and become a seller on currently selected market !");
+        }
+
+
+    }
+
+
+
+
+
+
+    @OnClick(R.id.dashboard_by_role)
+    void dashboardClick()
+    {
+        User user = PrefLogin.getUser(getActivity());
+
+        if(user.getRole()==User.ROLE_SHOP_ADMIN_CODE)
+        {
+
+            Intent intent = new Intent(getActivity(), ShopAdminHome.class);
+            startActivity(intent);
+        }
+        else if(user.getRole()==User.ROLE_ADMIN_CODE)
+        {
+            Intent intent = new Intent(getActivity(), AdminDashboard.class);
+            startActivity(intent);
+        }
+        else if(user.getRole()==User.ROLE_DELIVERY_GUY_SELF_CODE)
+        {
+            Intent intent = new Intent(getActivity(), DeliveryHome.class);
+            startActivity(intent);
+        }
+
+    }
+
+
+
+
 
     @OnClick({R.id.profile_image, R.id.user_profile})
     void editProfileClick()
     {
         Intent intent = new Intent(getActivity(), EditProfile.class);
-        intent.putExtra(FragmentEditProfileGlobal.EDIT_MODE_INTENT_KEY, FragmentEditProfileGlobal.MODE_UPDATE);
+        intent.putExtra(FragmentEditProfile.EDIT_MODE_INTENT_KEY, FragmentEditProfile.MODE_UPDATE);
         startActivity(intent);
 
     }
@@ -175,7 +254,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @OnClick(R.id.privacy_policy_block)
     void privacyPolicyClick()
     {
-        String url = "https://taxireferral.org/privacy-policy/";
+        String url = "";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
@@ -183,10 +262,12 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
+
+
     @OnClick(R.id.tos_block)
     void termsOfServiceClick()
     {
-        String url = "https://taxireferral.org/terms-of-service/";
+        String url = "";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
@@ -204,10 +285,16 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
-    void showToastMessage(String message)
+
+
+
+    private void showToastMessage(String message)
     {
         Toast.makeText(getActivity(),message, Toast.LENGTH_SHORT).show();
     }
+
+
+
 
 
 
@@ -245,7 +332,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
-    void logout()
+
+
+
+    private void logout()
     {
         // log out
         PrefLogin.saveUserProfile(null,getActivity());
@@ -254,6 +344,11 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         PrefLoginGlobal.saveUserProfile(null,getActivity());
         PrefLoginGlobal.saveCredentials(getActivity(),null,null);
 
+        PrefShopHome.saveShop(null,getActivity());
+
+
+
+//        FirebaseApp.getInstance().delete();
 
 
 
@@ -288,7 +383,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
-    void getUserProfile()
+    private void getUserProfile()
     {
 
         if(getActivity()==null)
@@ -376,7 +471,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
-    void bindUserProfile()
+
+
+
+    private void bindUserProfile()
     {
 
         User user = PrefLogin.getUser(getActivity());
@@ -463,15 +561,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
-
-
     void showLogMessage(String message)
     {
         Log.d("location_service",message);
     }
-
-
-
 
 
 }

@@ -24,41 +24,41 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.squareup.picasso.Picasso;
+
 import org.nearbyshops.enduserappnew.API.CartItemService;
 import org.nearbyshops.enduserappnew.API.CartStatsService;
 import org.nearbyshops.enduserappnew.API.ItemCategoryService;
 import org.nearbyshops.enduserappnew.API.ShopItemService;
-import org.nearbyshops.enduserappnew.CartsList.CartsList;
-import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
-import org.nearbyshops.enduserappnew.Interfaces.NotifySearch;
-import org.nearbyshops.enduserappnew.Interfaces.NotifySort;
-import org.nearbyshops.enduserappnew.ItemDetail.ItemDetailFragment;
-import org.nearbyshops.enduserappnew.ItemDetail.ItemDetail;
-import org.nearbyshops.enduserappnew.ItemsByCategory.Interfaces.NotifyBackPressed;
-import org.nearbyshops.enduserappnew.ItemsByCategory.ViewHolders.ViewHolderItemCategory;
-import org.nearbyshops.enduserappnew.ItemsByCategory.Model.ItemCategoriesList;
-import org.nearbyshops.enduserappnew.ItemsByCategory.ViewHolders.ViewHolderItemCategoryHorizontal;
-import org.nearbyshops.enduserappnew.ItemsInShopByCategory.SlidingLayerSort.PrefSortItemsInShop;
-import org.nearbyshops.enduserappnew.ItemsInShopByCategory.ViewHolders.ViewHolderShopItemSimplified;
-import org.nearbyshops.enduserappnew.Login.Login;
 import org.nearbyshops.enduserappnew.Model.Item;
 import org.nearbyshops.enduserappnew.Model.ItemCategory;
-import org.nearbyshops.enduserappnew.Model.Shop;
-import org.nearbyshops.enduserappnew.Model.ShopItem;
 import org.nearbyshops.enduserappnew.Model.ModelCartOrder.CartItem;
 import org.nearbyshops.enduserappnew.Model.ModelEndPoints.ShopItemEndPoint;
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.Model.ModelStats.CartStats;
+import org.nearbyshops.enduserappnew.Model.Shop;
+import org.nearbyshops.enduserappnew.Model.ShopItem;
+import org.nearbyshops.enduserappnew.CartItemList.CartItemListActivity;
+import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
+import org.nearbyshops.enduserappnew.Interfaces.NotifyBackPressed;
+import org.nearbyshops.enduserappnew.Interfaces.NotifySearch;
+import org.nearbyshops.enduserappnew.Interfaces.NotifySort;
+import org.nearbyshops.enduserappnew.DetailItem.ItemDetailFragment;
+import org.nearbyshops.enduserappnew.DetailItem.ItemDetail;
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderItemCategory;
+import org.nearbyshops.enduserappnew.ViewHolders.Model.ItemCategoriesList;
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderItemCategorySmall;
+import org.nearbyshops.enduserappnew.SlidingLayerSort.PreferencesSort.PrefSortItemsInShop;
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderShopItemSimplified;
+import org.nearbyshops.enduserappnew.Login.Login;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
-import org.nearbyshops.enduserappnew.ShopDetail.ShopDetail;
-import org.nearbyshops.enduserappnew.ShopDetail.ShopDetailFragment;
-import org.nearbyshops.enduserappnew.ShopsList.ViewHolders.ViewHolderShop;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.Models.HeaderItemsList;
+import org.nearbyshops.enduserappnew.DetailShop.ShopDetail;
+import org.nearbyshops.enduserappnew.DetailShop.ShopDetailFragment;
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderShop;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
-import org.nearbyshops.enduserappnew.Preferences.PrefShopHome;
-import org.nearbyshops.enduserappnew.Preferences.UtilityFunctions;
+import org.nearbyshops.enduserappnew.PreferencesDeprecated.PrefShopHome;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
 import org.nearbyshops.enduserappnew.R;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.Models.HeaderTitle;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.Models.HeaderTitle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,7 +76,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
-        ViewHolderItemCategoryHorizontal.ListItemClick,
+        ViewHolderItemCategorySmall.ListItemClick,
         ViewHolderItemCategory.ListItemClick, ViewHolderShopItemSimplified.ListItemClick,
         NotifyBackPressed, NotifySort, NotifySearch,
         ViewHolderShop.ListItemClick {
@@ -169,7 +169,7 @@ public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLa
         super.onCreateView(inflater, container, savedInstanceState);
 
         setRetainInstance(true);
-        View rootView = inflater.inflate(R.layout.fragment_items_in_stock_by_cat, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_items_in_shop_by_cat, container, false);
 
         ButterKnife.bind(this,rootView);
 
@@ -305,7 +305,7 @@ public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLa
 
                     return 6;
                 }
-                else if(dataset.get(position) instanceof HeaderItemsList)
+                else if(dataset.get(position) instanceof HeaderTitle)
                 {
                     return 6;
                 }
@@ -475,7 +475,8 @@ public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLa
             endPointCall = shopItemService.getShopItemEndpoint(
                     null,clearDataset,
                     currentShop.getShopID(),
-                    null,null,null,null,null,null,null,null,null,
+                    null,null,null,null,null,
+                    null,null,null,null,
                     null,null,null,
                     searchQuery,
                     true,current_sort,
@@ -656,9 +657,6 @@ public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLa
 
 
 
-
-
-
     @Override
     public void notifyRequestSubCategory(ItemCategory itemCategory) {
 
@@ -793,7 +791,8 @@ public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLa
 
 
 //        cartTotal.setText("Cart Total : " + PrefGeneral.getCurrencySymbol(getActivity()) + " " + String.valueOf(cartTotalValue));
-        cartTotal.setText(PrefGeneral.getCurrencySymbol(getActivity()) + " " + String.format("%.0f",cartTotalValue));
+
+        cartTotal.setText(PrefGeneral.getCurrencySymbol(getActivity()) + " " + UtilityFunctions.refinedString(cartTotalValue));
 
 
         if(save)
@@ -905,9 +904,21 @@ public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLa
     @OnClick({R.id.cart_stats})
     void viewCartClick()
     {
-        Intent intent = new Intent(getActivity(), CartsList.class);
+//                Intent intent = new Intent(getActivity(), CartsList.class);
+//        startActivity(intent);
+
+        Intent intent = new Intent(getActivity(), CartItemListActivity.class);
+
+
+        String shopJson = UtilityFunctions.provideGson().toJson(PrefShopHome.getShop(getActivity()));
+        intent.putExtra(CartItemListActivity.SHOP_INTENT_KEY,shopJson);
+
+        String cartStatsJson = UtilityFunctions.provideGson().toJson(listAdapter.cartStats);
+        intent.putExtra(CartItemListActivity.CART_STATS_INTENT_KEY,cartStatsJson);
+
         startActivity(intent);
     }
+
 
 
 
@@ -1011,7 +1022,8 @@ public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLa
 
 
         Call<List<CartStats>> listCall = cartStatsService
-                .getCart(endUser.getUserID(), null,shop.getShopID(),false,null,null);
+                .getCart(endUser.getUserID(), null,shop.getShopID(),
+                        true,null,null);
 
 
 
@@ -1029,10 +1041,13 @@ public class ItemsInShopByCatFragment extends Fragment implements SwipeRefreshLa
                     for(CartStats cartStats: response.body())
                     {
 
-//                        listAdapter.cartStatsMap.put(cartStats.getShopID(),cartStats);
-                        listAdapter.cartStats.setItemsInCart(cartStats.getItemsInCart());
-                        listAdapter.cartStats.setCart_Total(cartStats.getCart_Total());
-                        listAdapter.cartStats.setShopID(cartStats.getShopID());
+
+////                        listAdapter.cartStatsMap.put(cartStats.getShopID(),cartStats);
+//                        listAdapter.cartStats.setItemsInCart(cartStats.getItemsInCart());
+//                        listAdapter.cartStats.setCart_Total(cartStats.getCart_Total());
+//                        listAdapter.cartStats.setShopID(cartStats.getShopID());
+
+                        listAdapter.cartStats = cartStats;
 
 
 

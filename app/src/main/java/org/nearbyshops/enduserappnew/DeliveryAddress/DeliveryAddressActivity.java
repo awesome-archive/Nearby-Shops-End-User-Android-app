@@ -15,18 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.DeliveryAddressService;
-import org.nearbyshops.enduserappnew.ViewHolderCommon.Models.EmptyScreenMarker;
-import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
-import org.nearbyshops.enduserappnew.DeliveryAddress.EditAddress.EditAddressFragment;
-import org.nearbyshops.enduserappnew.DeliveryAddress.EditAddress.EditDeliveryAddress;
-import org.nearbyshops.enduserappnew.DeliveryAddress.ViewHolders.ViewHolderDeliveryAdddress;
-import org.nearbyshops.enduserappnew.Login.Login;
 import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.Model.ModelStats.DeliveryAddress;
+import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
+import org.nearbyshops.enduserappnew.EditAddress.EditAddressFragment;
+import org.nearbyshops.enduserappnew.EditAddress.EditDeliveryAddress;
+import org.nearbyshops.enduserappnew.ViewHolders.ViewHolderDeliveryAdddress;
+import org.nearbyshops.enduserappnew.Login.Login;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
-import org.nearbyshops.enduserappnew.Preferences.UtilityFunctions;
+import org.nearbyshops.enduserappnew.Utility.UtilityFunctions;
 import org.nearbyshops.enduserappnew.R;
+import org.nearbyshops.enduserappnew.ViewHoldersCommon.Models.EmptyScreenDataFullScreen;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,11 +40,14 @@ import java.util.List;
 
 public class DeliveryAddressActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, ViewHolderDeliveryAdddress.NotifyDeliveryAddress, View.OnClickListener {
 
+
+
+
     @Inject
     DeliveryAddressService deliveryAddressService;
 
     RecyclerView recyclerView;
-    DeliveryAddressAdapter adapter;
+    Adapter adapter;
     GridLayoutManager layoutManager;
     SwipeRefreshLayout swipeContainer;
 
@@ -99,6 +104,8 @@ public class DeliveryAddressActivity extends AppCompatActivity implements SwipeR
 
 
 
+
+
     void setupSwipeContainer()
     {
 
@@ -114,11 +121,14 @@ public class DeliveryAddressActivity extends AppCompatActivity implements SwipeR
     }
 
 
+
+
+
     void setupRecyclerView()
     {
 
 
-        adapter = new DeliveryAddressAdapter(dataset,this,this);
+        adapter = new Adapter(dataset,this,this);
         recyclerView.setAdapter(adapter);
         layoutManager = new GridLayoutManager(this,1);
         recyclerView.setLayoutManager(layoutManager);
@@ -136,6 +146,9 @@ public class DeliveryAddressActivity extends AppCompatActivity implements SwipeR
 
 
     }
+
+
+
 
 
     void showToastMessage(String message)
@@ -205,23 +218,24 @@ public class DeliveryAddressActivity extends AppCompatActivity implements SwipeR
 
                         if(response.body().size()==0)
                         {
-                            dataset.add(new EmptyScreenMarker());
+                            dataset.add(new EmptyScreenDataFullScreen());
                         }
                     }
                     else
                     {
-                        dataset.add(new EmptyScreenMarker());
+                        dataset.add(new EmptyScreenDataFullScreen());
                     }
 
                 }
                 else if(response.code()==204)
                 {
-                    dataset.add(new EmptyScreenMarker());
+                    dataset.add(new EmptyScreenDataFullScreen());
                 }
                 else
                 {
                     showToastMessage("Failed Code : " + response.code());
                 }
+
 
 
 
@@ -246,6 +260,9 @@ public class DeliveryAddressActivity extends AppCompatActivity implements SwipeR
             }
         });
     }
+
+
+
 
 
 

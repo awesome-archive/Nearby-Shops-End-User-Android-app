@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,25 +26,24 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.wunderlist.slidinglayer.SlidingLayer;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.OrderService;
+import org.nearbyshops.enduserappnew.Model.ModelCartOrder.Order;
+import org.nearbyshops.enduserappnew.Model.ModelEndPoints.OrderEndPoint;
+import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
 import org.nearbyshops.enduserappnew.Interfaces.NotifySearch;
 import org.nearbyshops.enduserappnew.Interfaces.NotifySort;
 import org.nearbyshops.enduserappnew.Interfaces.RefreshFragment;
 import org.nearbyshops.enduserappnew.Login.Login;
-import org.nearbyshops.enduserappnew.Model.Shop;
-import org.nearbyshops.enduserappnew.Model.ModelCartOrder.Endpoints.OrderEndPoint;
-import org.nearbyshops.enduserappnew.Model.ModelCartOrder.Order;
-import org.nearbyshops.enduserappnew.Model.ModelRoles.User;
-import org.nearbyshops.enduserappnew.OrderDetail.OrderDetail;
-import org.nearbyshops.enduserappnew.OrderDetail.PrefOrderDetail;
-import org.nearbyshops.enduserappnew.OrderHistory.SlidingLayerSort.PrefSortOrders;
-import org.nearbyshops.enduserappnew.OrderHistory.SlidingLayerSort.SlidingLayerSortOrders;
-import org.nearbyshops.enduserappnew.OrderHistory.ViewHolders.ViewHolderOrder;
+import org.nearbyshops.enduserappnew.DetailOrder.OrderDetail;
+import org.nearbyshops.enduserappnew.DetailOrder.PrefOrderDetail;
+import org.nearbyshops.enduserappnew.SlidingLayerSort.PreferencesSort.PrefSortOrders;
+import org.nearbyshops.enduserappnew.SlidingLayerSort.SlidingLayerSortOrders;
+import org.nearbyshops.enduserappnew.ViewHoldersForOrders.ViewHolderOrder;
 import org.nearbyshops.enduserappnew.Preferences.PrefGeneral;
 import org.nearbyshops.enduserappnew.Preferences.PrefLogin;
 import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
-import org.nearbyshops.enduserappnew.Preferences.PrefShopHome;
 import org.nearbyshops.enduserappnew.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -102,13 +105,6 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
     }
 
 
-    public static OrdersHistoryFragment newInstance() {
-        OrdersHistoryFragment fragment = new OrdersHistoryFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
 
 
 
@@ -117,6 +113,9 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
 
 
         setRetainInstance(true);
@@ -138,6 +137,9 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
 //        toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 //        toolbar.setTitle(getString(R.string.app_name));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+
+
 //
 
 
@@ -203,6 +205,17 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
 //            }
 //        }
 //    }
+
+
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+
+    }
+
 
 
 
@@ -318,6 +331,7 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
                 }
 
 
+
                 if(layoutManager.findLastVisibleItemPosition()==dataset.size()-1 + 1)
                 {
                     // trigger fetch next page
@@ -333,6 +347,8 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
                         offset = offset + limit;
                         makeNetworkCall(false);
                     }
+
+
 
 //                    previous_position = layoutManager.findLastVisibleItemPosition();
 
@@ -386,6 +402,21 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
 
 
 
+    public static OrdersHistoryFragment newInstance(boolean filterOrdersByUser, boolean filterOrdersByShop, boolean filterOrdersByDeliveryID) {
+        OrdersHistoryFragment fragment = new OrdersHistoryFragment();
+        Bundle args = new Bundle();
+
+        args.putBoolean("filter_orders_by_user",filterOrdersByUser);
+        args.putBoolean("filter_orders_by_shop",filterOrdersByShop);
+        args.putBoolean("filter_orders_by_delivery",filterOrdersByDeliveryID);
+
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+
+
     private void makeNetworkCall(final boolean clearDataset)
     {
 
@@ -410,8 +441,6 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
             }
 
 
-
-
             String current_sort = "";
 
             if(getActivity()!=null)
@@ -420,25 +449,11 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
             }
 
 
-            Integer shopID = null;
-
-            if(getActivity().getIntent().getBooleanExtra(OrderHistory.IS_FILTER_BY_SHOP,false))
-            {
-                Shop shop = PrefShopHome.getShop(getActivity());
-
-                if(shop!=null)
-                {
-                    shopID = shop.getShopID();
-                }
-                else
-                {
-                    shopID = 0;
-                }
-            }
 
 
-
-
+            boolean filterOrdersByUser = getArguments().getBoolean("filter_orders_by_user",false);
+            boolean filterOrdersByShop = getArguments().getBoolean("filter_orders_by_shop", false);
+            boolean filterOrdersByDelivery = getArguments().getBoolean("filter_orders_by_delivery",false);
 
 
 
@@ -474,18 +489,18 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
 
 
 
-
-
-
             Call<OrderEndPoint> call = orderService.getOrders(
                         PrefLogin.getAuthorizationHeaders(getActivity()),
-                        null,shopID,
-                        true,
+                        filterOrdersByShop,
+                        filterOrdersByUser,
+                        null,
                         pickFromShop,
-                        null,null,null,
                         null,null,
+                    null, null,
                         ordersPendingStatus,searchQuery,
-                        current_sort,limit,offset,null);
+                        current_sort,limit,offset,clearDataset,false);
+
+
 
 
 
@@ -536,6 +551,19 @@ public class OrdersHistoryFragment extends Fragment implements ViewHolderOrder.L
                         showToastMessage("Failed Code : " + String.valueOf(response.code()));
 
                     }
+
+
+
+
+                    if(offset+limit >= item_count)
+                    {
+                        adapter.setLoadMore(false);
+                    }
+                    else
+                    {
+                        adapter.setLoadMore(true);
+                    }
+
 
 
                     swipeContainer.setRefreshing(false);

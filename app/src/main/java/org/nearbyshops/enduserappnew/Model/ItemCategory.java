@@ -29,27 +29,6 @@ public class ItemCategory{
 
 
 
-	// Create Table Statement
-
-
-	public static final String createTableItemCategoryPostgres = "CREATE TABLE IF NOT EXISTS "
-			+ ItemCategory.TABLE_NAME + "("
-			+ " " + ItemCategory.ITEM_CATEGORY_ID + " SERIAL PRIMARY KEY,"
-			+ " " + ItemCategory.ITEM_CATEGORY_NAME + " text,"
-			+ " " + ItemCategory.ITEM_CATEGORY_DESCRIPTION + " text,"
-			+ " " + ItemCategory.PARENT_CATEGORY_ID + " INT,"
-			+ " " + ItemCategory.IS_LEAF_NODE + " boolean,"
-			+ " " + ItemCategory.IMAGE_PATH + " text,"
-			+ " " + ItemCategory.CATEGORY_ORDER + " INT,"
-
-			+ " " + ItemCategory.ITEM_CATEGORY_DESCRIPTION_SHORT + " text,"
-			+ " " + ItemCategory.IS_ABSTRACT + " boolean,"
-
-			+ " " + ItemCategory.IS_ENABLED + " boolean,"
-			+ " " + ItemCategory.IS_WAITLISTED + " boolean,"
-			+ " FOREIGN KEY(" + ItemCategory.PARENT_CATEGORY_ID +") REFERENCES "
-			+ ItemCategory.TABLE_NAME + "(" + ItemCategory.ITEM_CATEGORY_ID + ")"
-			+ ")";
 
 
 
@@ -68,6 +47,7 @@ public class ItemCategory{
 	private String descriptionShort;
 	private boolean isEnabled;
 	private boolean isWaitlisted;
+
 
 
 

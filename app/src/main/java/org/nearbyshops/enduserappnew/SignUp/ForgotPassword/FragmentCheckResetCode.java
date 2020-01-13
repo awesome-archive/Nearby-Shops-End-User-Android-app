@@ -23,6 +23,7 @@ import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+
 import org.nearbyshops.enduserappnew.API.UserService;
 import org.nearbyshops.enduserappnew.API_SDS.UserServiceGlobal;
 import org.nearbyshops.enduserappnew.DaggerComponentBuilder;
@@ -33,6 +34,7 @@ import org.nearbyshops.enduserappnew.Preferences.PrefServiceConfig;
 import org.nearbyshops.enduserappnew.R;
 import org.nearbyshops.enduserappnew.SignUp.Interfaces.ShowFragmentForgotPassword;
 import org.nearbyshops.enduserappnew.SignUp.PrefSignUp.PrefrenceForgotPassword;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,23 +50,17 @@ import javax.inject.Inject;
 public class FragmentCheckResetCode extends Fragment {
 
 
-    @BindView(R.id.check_icon)
-    ImageView checkIcon;
-    @BindView(R.id.cross_icon)
-    ImageView crossIcon;
-    @BindView(R.id.message)
-    TextView textAvailable;
 
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.verification_code)
-    TextInputEditText verificationCode;
-    @BindView(R.id.email_text)
-    TextView emailText;
+    @BindView(R.id.check_icon) ImageView checkIcon;
+    @BindView(R.id.cross_icon) ImageView crossIcon;
+    @BindView(R.id.message) TextView textAvailable;
+
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
+    @BindView(R.id.verification_code) TextInputEditText verificationCode;
+    @BindView(R.id.email_text) TextView emailText;
 
 
-    @BindView(R.id.progress_bar_resend)
-    ProgressBar progressBarResend;
+    @BindView(R.id.progress_bar_resend) ProgressBar progressBarResend;
     @BindView(R.id.message_resend)
     TextView messageResend;
 
@@ -74,12 +70,9 @@ public class FragmentCheckResetCode extends Fragment {
 //    @BindView(R.id.confirm_password) EditText confirmPassword;
 
 
-    @BindView(R.id.progress_bar_button)
-    ProgressBar progressBarButton;
-    @BindView(R.id.next)
-    TextView nextButton;
-    @BindView(R.id.header_title)
-    TextView headerTitle;
+    @BindView(R.id.progress_bar_button) ProgressBar progressBarButton;
+    @BindView(R.id.next) TextView nextButton;
+    @BindView(R.id.header_title) TextView headerTitle;
 
 
 
@@ -108,6 +101,9 @@ public class FragmentCheckResetCode extends Fragment {
                 .getNetComponent().Inject(this);
 
     }
+
+
+
 
     @Nullable
     @Override

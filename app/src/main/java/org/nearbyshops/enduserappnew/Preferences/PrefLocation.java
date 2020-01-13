@@ -4,16 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
+
+
 import org.nearbyshops.enduserappnew.MyApplication;
 import org.nearbyshops.enduserappnew.R;
 
 import static android.content.Context.MODE_PRIVATE;
-
-/**
- * Created by sumeet on 19/10/16.
- */
-
-
 
 
 
@@ -21,13 +17,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PrefLocation {
 
+
+
     public static String KEY_LAT_CENTER = "key_lat_center";
     public static String KEY_LON_CENTER = "key_lon_center";
-
-    public static String KEY_PROXIMITY = "key_proximity";
-    public static String KEY_DELIVERY_RANGE_MAX = "key_delivery_range_max";
-    public static String KEY_DELIVERY_RANGE_MIN = "key_delivery_range_min";
-
 
 
     public static Location getLocation(Context context)

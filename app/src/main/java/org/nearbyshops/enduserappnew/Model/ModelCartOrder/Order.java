@@ -91,25 +91,12 @@ public class Order {
 
 
 
-    //int orderStatus;
-
-
-//    private Boolean deliveryReceived;
-//    private Boolean paymentReceived;
-
-
-
-
     private Shop shop;
     private DeliveryAddress deliveryAddress;
     private OrderStats orderStats;
     private User rt_delivery_guy_profile;
 
 
-    // utility functions
-
-
-    // invoice bill components -- item_total, delivery_charges, app_service_charges, taxes, total_net_payable
 
 
 
@@ -149,21 +136,7 @@ public class Order {
         this.deliveryAddressID = deliveryAddressID;
     }
 
-    public int getDeliveryGuySelfID() {
-        return deliveryGuySelfID;
-    }
 
-    public void setDeliveryGuySelfID(int deliveryGuySelfID) {
-        this.deliveryGuySelfID = deliveryGuySelfID;
-    }
-
-    public int getDeliveryOTP() {
-        return deliveryOTP;
-    }
-
-    public void setDeliveryOTP(int deliveryOTP) {
-        this.deliveryOTP = deliveryOTP;
-    }
 
     public int getItemCount() {
         return itemCount;
@@ -201,81 +174,12 @@ public class Order {
         return netPayable;
     }
 
-    public void setNetPayable(double netPayable) {
-        this.netPayable = netPayable;
-    }
 
-    public boolean isCancelledByEndUser() {
-        return isCancelledByEndUser;
-    }
-
-    public void setCancelledByEndUser(boolean cancelledByEndUser) {
-        isCancelledByEndUser = cancelledByEndUser;
-    }
-
-    public String getReasonCancelledByShop() {
-        return reasonCancelledByShop;
-    }
-
-    public void setReasonCancelledByShop(String reasonCancelledByShop) {
-        this.reasonCancelledByShop = reasonCancelledByShop;
-    }
-
-    public String getReasonCancelledByUser() {
-        return reasonCancelledByUser;
-    }
-
-    public void setReasonCancelledByUser(String reasonCancelledByUser) {
-        this.reasonCancelledByUser = reasonCancelledByUser;
-    }
-
-    public String getReasonForOrderReturned() {
-        return reasonForOrderReturned;
-    }
-
-    public void setReasonForOrderReturned(String reasonForOrderReturned) {
-        this.reasonForOrderReturned = reasonForOrderReturned;
-    }
 
     public Timestamp getDateTimePlaced() {
         return dateTimePlaced;
     }
 
-    public void setDateTimePlaced(Timestamp dateTimePlaced) {
-        this.dateTimePlaced = dateTimePlaced;
-    }
-
-    public Timestamp getTimestampHDConfirmed() {
-        return timestampHDConfirmed;
-    }
-
-    public void setTimestampHDConfirmed(Timestamp timestampHDConfirmed) {
-        this.timestampHDConfirmed = timestampHDConfirmed;
-    }
-
-    public Timestamp getTimestampHDPacked() {
-        return timestampHDPacked;
-    }
-
-    public void setTimestampHDPacked(Timestamp timestampHDPacked) {
-        this.timestampHDPacked = timestampHDPacked;
-    }
-
-    public Timestamp getTimestampHDOutForDelivery() {
-        return timestampHDOutForDelivery;
-    }
-
-    public void setTimestampHDOutForDelivery(Timestamp timestampHDOutForDelivery) {
-        this.timestampHDOutForDelivery = timestampHDOutForDelivery;
-    }
-
-    public Timestamp getTimestampHDDelivered() {
-        return timestampHDDelivered;
-    }
-
-    public void setTimestampHDDelivered(Timestamp timestampHDDelivered) {
-        this.timestampHDDelivered = timestampHDDelivered;
-    }
 
     public boolean isPickFromShop() {
         return isPickFromShop;
@@ -315,6 +219,95 @@ public class Order {
 
     public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
+    }
+
+
+    public int getDeliveryGuySelfID() {
+        return deliveryGuySelfID;
+    }
+
+    public void setDeliveryGuySelfID(int deliveryGuySelfID) {
+        this.deliveryGuySelfID = deliveryGuySelfID;
+    }
+
+    public int getDeliveryOTP() {
+        return deliveryOTP;
+    }
+
+    public void setDeliveryOTP(int deliveryOTP) {
+        this.deliveryOTP = deliveryOTP;
+    }
+
+    public void setNetPayable(double netPayable) {
+        this.netPayable = netPayable;
+    }
+
+    public boolean isCancelledByEndUser() {
+        return isCancelledByEndUser;
+    }
+
+    public void setCancelledByEndUser(boolean cancelledByEndUser) {
+        isCancelledByEndUser = cancelledByEndUser;
+    }
+
+    public String getReasonCancelledByShop() {
+        return reasonCancelledByShop;
+    }
+
+    public void setReasonCancelledByShop(String reasonCancelledByShop) {
+        this.reasonCancelledByShop = reasonCancelledByShop;
+    }
+
+    public String getReasonCancelledByUser() {
+        return reasonCancelledByUser;
+    }
+
+    public void setReasonCancelledByUser(String reasonCancelledByUser) {
+        this.reasonCancelledByUser = reasonCancelledByUser;
+    }
+
+    public String getReasonForOrderReturned() {
+        return reasonForOrderReturned;
+    }
+
+    public void setReasonForOrderReturned(String reasonForOrderReturned) {
+        this.reasonForOrderReturned = reasonForOrderReturned;
+    }
+
+    public void setDateTimePlaced(Timestamp dateTimePlaced) {
+        this.dateTimePlaced = dateTimePlaced;
+    }
+
+    public Timestamp getTimestampHDConfirmed() {
+        return timestampHDConfirmed;
+    }
+
+    public void setTimestampHDConfirmed(Timestamp timestampHDConfirmed) {
+        this.timestampHDConfirmed = timestampHDConfirmed;
+    }
+
+    public Timestamp getTimestampHDPacked() {
+        return timestampHDPacked;
+    }
+
+    public void setTimestampHDPacked(Timestamp timestampHDPacked) {
+        this.timestampHDPacked = timestampHDPacked;
+    }
+
+    public Timestamp getTimestampHDOutForDelivery() {
+        return timestampHDOutForDelivery;
+    }
+
+    public void setTimestampHDOutForDelivery(Timestamp timestampHDOutForDelivery) {
+        this.timestampHDOutForDelivery = timestampHDOutForDelivery;
+    }
+
+    public Timestamp getTimestampHDDelivered() {
+        return timestampHDDelivered;
+    }
+
+    public void setTimestampHDDelivered(Timestamp timestampHDDelivered) {
+        this.timestampHDDelivered = timestampHDDelivered;
     }
 
     public OrderStats getOrderStats() {
